@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { 
-  Image, 
-  ImageBackground, 
-  StyleSheet, 
-  Text, 
-  View, 
-  Pressable, 
-  TextInput, 
-  KeyboardAvoidingView, 
-  TouchableWithoutFeedback, 
-  Keyboard 
+import {
+  Image,
+  ImageBackground,
+  Text,
+  View,
+  Pressable,
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  SafeAreaView, // Import SafeAreaView
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { getZodiacSign } from "./zodiac";
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory'
+import styles from "./styles";
 
-// Avatar images
 const avatars = {
   bunny: require("../assets/avatars/bunny.png"),
   racoon: require("../assets/avatars/racoon.png"),
   fox: require("../assets/avatars/fox.png"),
 };
 
-// Zodiac symbols
 const zodiacSymbols = {
   default: require("../assets/zodiac/default.png"),
   aries: require("../assets/zodiac/aries.png"),
@@ -47,7 +45,6 @@ export default function Index() {
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState(zodiacSymbols.default);
 
-  // Load custom font
   useEffect(() => {
     const loadFont = async () => {
       await Font.loadAsync({
@@ -89,138 +86,86 @@ export default function Index() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <ImageBackground
-          source={require("../assets/backgrounds/user_creation_background.png")}
-          style={styles.background}
-        >
-          <View style={styles.innerContainer}>
-            <Image source={currentAvatar} style={styles.avatar} />
+    <SafeAreaView style={styles.mainContainer}>
+      <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <ImageBackground
+            source={require("../assets/backgrounds/user_creation_background.png")}
+            style={styles.backgroundImage}
+          >
+            <View style={styles.topContainer}>
+            <View style={styles.titleContainer}>
+                {fontLoaded && (
+                  <Text style={styles.selectAvatarText}>Select Your Avatar</Text>
+                )}
+                  </View>
+              </View>
+            <View style={styles.middleContainer}>
+              <View style={styles.avatarContainer}>
+                <Image source={currentAvatar} style={styles.avatarImage} />
+         
+              </View>
+              <View style={styles.zodiacContainer}>
+  <Image source={currentZodiacSymbol} style={styles.zodiacSymbol} />
+              </View>
+              <View style={styles.arrowLeft}>
+                <Pressable onPress={changeAvatarLeft} style={styles.arrowButtonLeft}>
+                  <Image
+                    source={require("../assets/buttons/arrow-left.png")}
+                    style={styles.arrowImage}
+                  />
+                  </Pressable>
+              </View>
+              <View style={styles.arrowRight}>
+                <Pressable onPress={changeAvatarRight} style={styles.arrowButtonRight}>
+                  <Image
+                    source={require("../assets/buttons/arrow-right.png")}
+                    style={styles.arrowImage}
+                  />
+                  </Pressable>
+                  </View>
+            </View>
 
-            <Pressable onPress={changeAvatarLeft}>
-              <Image
-                source={require("../assets/buttons/arrow-left.png")}
-                style={[styles.button, styles.leftButton]}
-              />
-            </Pressable>
+            <View style={styles.lowerContainer}>
+            <View style={styles.nameLetterContainer}>
+                {fontLoaded && (
+                  <Text style={styles.nameText}>Name</Text>
+                )}
+                  </View>
+            <View style={styles.nameContainer}>
+              {fontLoaded && (
+                <TextInput
+                  style={styles.inputName}
+                  placeholder="Enter your name"
+                  placeholderTextColor="#fff"
+                  maxLength={12}
+                  />    
+                )}
+              </View>
+              <View style={styles.selectBirthLetterContainer}>
+                {fontLoaded && (
+                  <Text style={styles.selectBirthText}>Select Your Birth</Text>
+                )}
+                  </View>
+              <View style={styles.dateContainer}>
 
-            <Pressable onPress={changeAvatarRight}>
-              <Image
-                source={require("../assets/buttons/arrow-right.png")}
-                style={[styles.button, styles.rightButton]}
-              />
-            </Pressable>
+              <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
+                <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+                </Pressable>
 
-            {fontLoaded && (
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your name"
-                placeholderTextColor="#fff"
-                maxLength={12}
-              />
-            )}
-
-            <Pressable onPress={() => setShowDatePicker(true)}>
-              <Text style={styles.inputdate}>{date.toLocaleDateString()}</Text>
-            </Pressable>
-
-            {/* Zodiac symbol */}
-            <Image source={currentZodiacSymbol} style={styles.zodiacImage} />
-
-            {showDatePicker && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                display="default"
-                onChange={handleDateChange}
-              />
-            )}
-
-          </View>
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+              {showDatePicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="default"
+                  onChange={handleDateChange}
+                />
+                )}
+                </View>
+            </View>
+          </ImageBackground>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    flex: 1,
-  },
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-  },
-  innerContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    position: "relative",
-      marginBottom: 0,
-  },
-  avatar: {
-    width: 700,
-    height: 700,
-    resizeMode: "contain",
-    position: "absolute",
-    borderRadius: 75,
-    marginBottom: 20,
-  },
-  button: {
-    position: "absolute",
-    width: 50,
-    height: 50,
-    resizeMode: "contain",
-  },
-  leftButton: {
-    left: -180,
-    top: "60%",
-    marginTop: 50,
-  },
-  rightButton: {
-    right: -180,
-    top: "60%",
-    marginTop: 50,
-  },
-  input: {
-    width: "80%",
-    height: 50,
-    borderWidth: 2,
-    borderColor: "#fff",
-    borderRadius: 25,
-    fontSize: 24,
-    fontFamily: "fink-heavy",
-    color: "#fff",
-    marginTop: 20,
-    position: "fixed",
-    bottom: -215,
-    textAlign: "center",
-  },
-  inputdate: {
-    width: 150,
-    height: 50,
-    borderWidth: 2,
-    borderColor: "#fff",
-    borderRadius: 25,
-    fontSize: 24,
-    fontFamily: "fink-heavy",
-    color: "#fff",
-    marginTop: 20,
-    position: "fixed",
-    bottom: -275,
-    textAlign: "center",
-  },
-  zodiacImage: {
-    width: 35,
-    height: 35,
-    resizeMode: "contain",
-    left: "1.5%", 
-    marginTop: -30, 
-    top: "-21%", 
-    alignSelf: "center",
-    marginLeft: 210,
-  },
-});
