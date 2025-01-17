@@ -7,8 +7,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     position: "relative",
-    borderWidth: 1,
-    borderColor: "red", // Border for debugging
+    overflow: "hidden", 
   },
   backgroundImage: {
     flex: 1,
@@ -17,71 +16,60 @@ const styles = StyleSheet.create({
   },
 
   topContainer: {
-    position: "absolute",
-    height: height * 0.3, // Set height to 60% of the screen height
-    width: width * 0.99, // Set width to 80% of the screen width
-    top: "0%", // Position the top container above the middle container
+    minHeight: 150, 
+    height: height * 0.25, 
+    width: width * 0.99, 
+    top: "0%", 
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "yellow", // Border for debugging
   },
   titleContainer: {
-    position: "absolute",
-    top: "22%", // This ensures the container starts 20% from the top, adjusting dynamically
+    top: "0%", 
     width: moderateScale(300),
     height: moderateScale(120),
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "green", // Border for debugging
   },
   selectAvatarText: {
-    fontFamily: "fink-heavy", // Apply the imported font
-    fontSize: moderateScale(62), // Use scale for responsive font size
-    color: "#bd8d56", // White text color
+    fontFamily: "fink-heavy", 
+    fontSize: moderateScale(62), 
+    color: "#bd8d56", 
     textAlign: "center",
   },
   middleContainer: {
-      position: "absolute",
-      height: height * 0.3, // Set height to 60% of the screen height
-    width: width * 0.99, // Set width to 80% of the screen width
-    top: "33%", // This ensures the container starts 20% from the top, adjusting dynamically
-    left: "0%", // This centers the container with some space from the left side
-    right: "0%", // This centers the container with some space from the right side
+    minHeight: 200, 
+      height: height * 0.3, 
+    width: width * 0.99, 
+    top: "0%", 
+    left: "0%", 
+    right: "0%", 
       justifyContent: "center",
     alignItems: "center",
-      borderWidth: 2,
-      borderColor: "blue", // Border for debugging
   },
   avatarContainer: {
-    width: moderateScale(190), // Scale based on screen width
+    width: moderateScale(190),
     height: moderateScale(170),
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: (width * 0.6) / 2, // This makes the container a circle
-    borderWidth: 1,
-    borderColor: "green", // Border for debugging
+    borderRadius: (width * 0.6) / 2, 
     backgroundColor: "#e7e9c2",
   },
   
   avatarImage: {
     position: "absolute",
-    width: moderateScale(200), // Adjust to keep it within container size
+    width: moderateScale(200), 
     height: moderateScale(200),
     top: "-20%",
     resizeMode: "contain",
   },
   arrowLeft: {
     position: "absolute",
-    top: "35%", // This ensures the container starts 20% from the top, adjusting dynamically
-    left: "5%", // This centers the container with some space from the left side
+    top: "35%", 
+    left: "5%", 
     width: moderateScale(50),
     height: moderateScale(50),
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "pink", // Border for debugging
   },
 
   arrowButtonLeft: {
@@ -90,14 +78,12 @@ const styles = StyleSheet.create({
   },
   arrowRight: {
     position: "absolute",
-    top: "35%", // This ensures the container starts 20% from the top, adjusting dynamically
+    top: "35%", 
     right: "5%", 
     width: moderateScale(50),
     height: moderateScale(50),
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "pink", // Border for debugging
   },
   arrowButtonRight: {
     position: "absolute",
@@ -109,108 +95,94 @@ const styles = StyleSheet.create({
   },
   zodiacContainer: {
     position: "absolute",
-    top: "2%", // This ensures the container starts 20% from the top, adjusting dynamically
-    left: "69.6%", // This centers the container with some space from the left side
+    top: "2%", 
+    left: "69.6%", 
     right: "0%", 
-    width: moderateScale(53), // Scale based on screen width
+    width: moderateScale(53), 
     height: moderateScale(51),
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: (width * 0.6) / 2, // This makes the container a circle
-    borderWidth: 1,
-    borderColor: "purple", // Border for debugging
+    borderRadius: (width * 0.6) / 2, 
       backgroundColor: "#e7e9c2",
   },
   zodiacSymbol: {
-    width: moderateScale(35), // Scale based on screen width
+    width: moderateScale(35), 
     height: moderateScale(35),
     resizeMode: "contain",
   },
   lowerContainer: {
-    position: "absolute",
-    height: height * 0.31, // Set height to 60% of the screen height
-    width: width * 0.99, // Set width to 80% of the screen width
-    top: "66%", // Positioned below the middle container (adjust as needed)
+    minHeight: 150, 
+    height: height * 0.31, 
+    width: width * 0.99, 
+    top: "0%", 
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "orange", // Border for debugging
   },
   nameLetterContainer: {
     position: "absolute",
     top: "0%",
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(45),
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "grey", // Border for debugging
+
 
   },
 
   nameText: {
     fontFamily: 'fink-heavy',
     fontSize: moderateScale(40),
-    borderWidth: 1,
     color: "#bd8d56",
-    borderColor: "grey", // Border for debugging
     textAlign: "center",
 
   },
   nameContainer: {
     top: "-5%",
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(60),
-    borderWidth: 1,
-    borderColor: "grey", // Border for debugging
 
   },
   inputName: {
+    
     fontFamily: 'fink-heavy',
     position: "absolute",
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(60),
     borderColor: "#fff",
     borderWidth: 2,
     borderRadius: 25,
     color: "#fff",
     textAlign: "center",
-    fontSize: moderateScale(30), // Use scale for responsive font size
-    marginBottom: 20,
+    fontSize: moderateScale(30), 
+    lineHeight: moderateScale(60), 
   },
   selectBirthLetterContainer: {
     position: "absolute",
     top: "50%",
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(45),
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "grey", // Border for debugging
 
   },
 
   selectBirthText: {
     fontFamily: 'fink-heavy',
     fontSize: moderateScale(40),
-    borderWidth: 1,
     color: "#bd8d56",
-    borderColor: "grey", // Border for debugging
     textAlign: "center",
 
   },
 
   dateContainer: {
     top: "20%",
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(50),
-    borderWidth: 1,
-    borderColor: "grey", // Border for debugging
 
   },
   
   datePickerButton: {
-    width: moderateScale(300), // Scale based on screen width
+    width: moderateScale(300), 
     height: moderateScale(50),
     borderColor: "#fff",
     borderWidth: 2,
@@ -221,8 +193,30 @@ const styles = StyleSheet.create({
   dateText: {
     fontFamily: 'fink-heavy',
     color: "#fff",
-    fontSize: moderateScale(30), // Use scale for responsive font size
+    fontSize: moderateScale(30), 
   },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    backgroundColor: "#222",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+  },
+  modalInput: {
+    fontSize: 18,
+    color: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#fff",
+    textAlign: "center",
+    padding: 10,
+  },
+  
+  
 });
 
 export default styles;

@@ -6,10 +6,12 @@ import {
   View,
   Pressable,
   TextInput,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  SafeAreaView, // Import SafeAreaView
+  SafeAreaView,
+  Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -44,6 +46,8 @@ export default function Index() {
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState(zodiacSymbols.default);
+  const [isModalVisible, setIsModalVisible] = useState(false); 
+  const [name, setName] = useState(""); 
 
   useEffect(() => {
     const loadFont = async () => {
@@ -87,26 +91,30 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <KeyboardAvoidingView style={styles.mainContainer} behavior="padding">
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={0}
+      >
+        {/* Touch event to dismiss the keyboard when tapping outside */}
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <ImageBackground
             source={require("../assets/backgrounds/user_creation_background.png")}
             style={styles.backgroundImage}
           >
             <View style={styles.topContainer}>
-            <View style={styles.titleContainer}>
+              <View style={styles.titleContainer}>
                 {fontLoaded && (
                   <Text style={styles.selectAvatarText}>Select Your Avatar</Text>
                 )}
-                  </View>
               </View>
+            </View>
             <View style={styles.middleContainer}>
               <View style={styles.avatarContainer}>
                 <Image source={currentAvatar} style={styles.avatarImage} />
-         
               </View>
               <View style={styles.zodiacContainer}>
-  <Image source={currentZodiacSymbol} style={styles.zodiacSymbol} />
+                <Image source={currentZodiacSymbol} style={styles.zodiacSymbol} />
               </View>
               <View style={styles.arrowLeft}>
                 <Pressable onPress={changeAvatarLeft} style={styles.arrowButtonLeft}>
@@ -114,7 +122,7 @@ export default function Index() {
                     source={require("../assets/buttons/arrow-left.png")}
                     style={styles.arrowImage}
                   />
-                  </Pressable>
+                </Pressable>
               </View>
               <View style={styles.arrowRight}>
                 <Pressable onPress={changeAvatarRight} style={styles.arrowButtonRight}>
@@ -122,49 +130,64 @@ export default function Index() {
                     source={require("../assets/buttons/arrow-right.png")}
                     style={styles.arrowImage}
                   />
-                  </Pressable>
-                  </View>
+                </Pressable>
+              </View>
             </View>
 
             <View style={styles.lowerContainer}>
-            <View style={styles.nameLetterContainer}>
+              <View style={styles.nameLetterContainer}>
                 {fontLoaded && (
                   <Text style={styles.nameText}>Name</Text>
                 )}
-                  </View>
-            <View style={styles.nameContainer}>
-              {fontLoaded && (
-                <TextInput
-                  style={styles.inputName}
-                  placeholder="Enter your name"
-                  placeholderTextColor="#fff"
-                  maxLength={12}
-                  />    
-                )}
               </View>
+              <Pressable onPress={() => setIsModalVisible(true)} style={styles.nameContainer}>
+                {fontLoaded && (
+                  <Text style={styles.inputName}>
+                    {name || "Enter your name"}
+                  </Text>
+                )}
+              </Pressable>
               <View style={styles.selectBirthLetterContainer}>
                 {fontLoaded && (
                   <Text style={styles.selectBirthText}>Select Your Birth</Text>
                 )}
-                  </View>
+              </View>
               <View style={styles.dateContainer}>
-
-              <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
-                <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+                <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
+                  <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
                 </Pressable>
 
-              {showDatePicker && (
-                <DateTimePicker
-                  value={date}
-                  mode="date"
-                  display="default"
-                  onChange={handleDateChange}
-                />
+                {showDatePicker && (
+                  <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={handleDateChange}
+                  />
                 )}
-                </View>
+              </View>
             </View>
           </ImageBackground>
         </TouchableWithoutFeedback>
+
+        {/* Modal Screen*/}
+        <Modal visible={isModalVisible} transparent animationType="fade">
+          <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContainer}>
+                <TextInput
+                  style={styles.modalInput}
+                  placeholder="Enter your name"
+                  placeholderTextColor="#fff"
+                  maxLength={12}
+                  value={name}
+                  onChangeText={(text) => setName(text)}
+                  autoFocus
+                />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
