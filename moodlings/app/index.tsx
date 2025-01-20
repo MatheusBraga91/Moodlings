@@ -12,12 +12,17 @@ import {
   Modal,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../redux/userSlice";
 import { getZodiacSign } from "./zodiac";
 import styles from "./styles";
+import { useRouter } from "expo-router";  // Importing useRouter for navigation
 
+// Avatars and Zodiac symbols setup
 const avatars = {
   bunny: require("../assets/avatars/bunny.png"),
   racoon: require("../assets/avatars/racoon.png"),
@@ -46,8 +51,11 @@ export default function Index() {
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState(zodiacSymbols.default);
-  const [isModalVisible, setIsModalVisible] = useState(false); 
-  const [name, setName] = useState(""); 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [name, setName] = useState("");
+  
+  const dispatch = useDispatch();
+  const router = useRouter();  // Initialize useRouter for navigation
 
   useEffect(() => {
     const loadFont = async () => {
@@ -89,6 +97,43 @@ export default function Index() {
     setShowDatePicker(false);
   };
 
+  // REDUX SAVE INFO
+  const handleCreateUser = () => {
+    if (name) {
+      // Show confirmation alert before saving
+      Alert.alert(
+        "Create your profile?",
+        "Do you want to save your profile information?",
+        [
+          {
+            text: "No",
+            onPress: () => console.log("User cancelled profile creation."),
+            style: "cancel",
+          },
+          {
+            text: "Yes",
+            onPress: () => {
+              // Dispatch user info to Redux
+              dispatch(setUserInfo({
+                name: name,
+                avatar: currentAvatar,
+                dateOfBirth: date.toLocaleDateString(),
+                zodiacSymbol: currentZodiacSymbol,
+              }));
+
+              alert("User information saved!");
+              // Navigate to the main screen after profile creation
+              router.push("../MainScreen/mainScreen");
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    } else {
+      alert("Please enter a name.");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <KeyboardAvoidingView
@@ -110,6 +155,10 @@ export default function Index() {
               </View>
             </View>
             <View style={styles.middleContainer}>
+              <Pressable onPress={handleCreateUser} style={styles.createButton}>
+                <Text style={styles.createButtonText}>Create</Text>
+              </Pressable>
+
               <View style={styles.avatarContainer}>
                 <Image source={currentAvatar} style={styles.avatarImage} />
               </View>
@@ -133,7 +182,6 @@ export default function Index() {
                 </Pressable>
               </View>
             </View>
-
             <View style={styles.lowerContainer}>
               <View style={styles.nameLetterContainer}>
                 {fontLoaded && (
@@ -149,7 +197,7 @@ export default function Index() {
               </Pressable>
               <View style={styles.selectBirthLetterContainer}>
                 {fontLoaded && (
-                  <Text style={styles.selectBirthText}>Select Your Birth</Text>
+                  <Text style={styles.selectBirthText}>Date of Birth</Text>
                 )}
               </View>
               <View style={styles.dateContainer}>
@@ -170,7 +218,7 @@ export default function Index() {
           </ImageBackground>
         </TouchableWithoutFeedback>
 
-        {/* Modal Screen*/}
+        {/* Modal Screen */}
         <Modal visible={isModalVisible} transparent animationType="fade">
           <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
             <View style={styles.modalBackground}>

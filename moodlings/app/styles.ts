@@ -215,6 +215,26 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
   },
+
+  
+  createButton: {
+    position: "absolute",
+    top: "-10%", 
+    left: "7%", 
+    width: moderateScale(100),
+    height: moderateScale(50),
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,       
+    borderColor: "pink",      
+    borderRadius: 50, 
+  },
+
+  createButtonText: {
+    fontFamily: 'fink-heavy',
+    color: "#fff",
+    fontSize: moderateScale(30), 
+  },
   
   
 });
