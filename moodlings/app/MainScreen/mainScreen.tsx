@@ -10,25 +10,25 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import styles from './mainStyles';
-import { THEMES } from '../cardThemes/themes'; // Adjust the path as needed
+import { THEMES } from '../cardThemes/themes'; 
 
 const MainScreen = () => {
   // Accessing user data from Redux
-  const userInfo = useSelector((state: any) => state.user); // Adjust 'state.user' based on your Redux structure
+  const userInfo = useSelector((state: any) => state.user); // 'state.user' based on Redux structure
 
   // Set default theme and mood
-  const currentTheme = 'grape'; // Set to 'grape' by default
-  const [mood, setMood] = useState<string | null>(null); // State for the selected mood
+  const currentTheme = 'grape'; // Set 'grape' by defaut
+  const [mood, setMood] = useState<string | null>(null); // State for the select mood
   const [isModalVisible, setModalVisible] = useState(false); // State to control modal visibility
 
-  // Open and close modal
+  // Open and clse modal
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-  // Handle mood selection
+  // handle mod selection
   const selectMood = (selectedMood: string) => {
-    setMood(selectedMood); // Set the selected mood
-    closeModal(); // Close the modal
+    setMood(selectedMood); // Set the selecte mood
+    closeModal(); // Close modal
   };
 
   return (
@@ -42,9 +42,9 @@ const MainScreen = () => {
       <ImageBackground
         source={THEMES[currentTheme].cardImage} // Dynamically use the card image based on the theme
         style={styles.middleContainer}
-        imageStyle={styles.cardBackgroundImage} // Optional: Customize how the image is displayed
+        imageStyle={styles.cardBackgroundImage} // Customize how image displayed
       >
-        <Text style={[styles.testText, { color: THEMES[currentTheme].textColor }]}>
+        <Text style={[styles.testText, { color: THEMES[currentTheme].avatarContainerColor }]}>
           {userInfo.name}
         </Text>
 

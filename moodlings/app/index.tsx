@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -20,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { setUserInfo } from "../redux/userSlice";
 import { getZodiacSign } from "./zodiac";
 import styles from "./styles";
-import { useRouter } from "expo-router";  // Importing useRouter for navigation
+import { useRouter } from "expo-router";  // Importing useRouter for navigate
 
 // Avatars and Zodiac symbols setup
 const avatars = {
@@ -55,7 +56,7 @@ export default function Index() {
   const [name, setName] = useState("");
   
   const dispatch = useDispatch();
-  const router = useRouter();  // Initialize useRouter for navigation
+  const router = useRouter();  // Initialize useRouter for navigate
 
   useEffect(() => {
     const loadFont = async () => {
@@ -97,7 +98,7 @@ export default function Index() {
     setShowDatePicker(false);
   };
 
-  // REDUX SAVE INFO
+  // REDUX SAVE INFO!!
   const handleCreateUser = () => {
     if (name) {
       // Show confirmation alert before saving
@@ -113,7 +114,7 @@ export default function Index() {
           {
             text: "Yes",
             onPress: () => {
-              // Dispatch user info to Redux
+              // Dispatch info to Redux
               dispatch(setUserInfo({
                 name: name,
                 avatar: currentAvatar,
@@ -122,7 +123,7 @@ export default function Index() {
               }));
 
               alert("User information saved!");
-              // Navigate to the main screen after profile creation
+              // Navigate to main screen after profile creation
               router.push("../MainScreen/mainScreen");
             },
           },
@@ -141,7 +142,7 @@ export default function Index() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={0}
       >
-        {/* Touch event to dismiss the keyboard when tapping outside */}
+        {/* Touch event to dismis keyboard when tap outside */}
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <ImageBackground
             source={require("../assets/backgrounds/user_creation_background.png")}
@@ -219,9 +220,9 @@ export default function Index() {
         </TouchableWithoutFeedback>
 
         {/* Modal Screen */}
-        <Modal visible={isModalVisible} transparent animationType="fade">
+        <Modal visible={isModalVisible} transparent animationType="slide">
           <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
-            <View style={styles.modalBackground}>
+            <View style={styles.modalOverlay}>
               <View style={styles.modalContainer}>
                 <TextInput
                   style={styles.modalInput}
@@ -232,6 +233,9 @@ export default function Index() {
                   onChangeText={(text) => setName(text)}
                   autoFocus
                 />
+                <TouchableOpacity onPress={() => setIsModalVisible(false)} style={styles.closeButton}>
+                  <Text style={styles.closeText}>Return</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>

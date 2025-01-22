@@ -209,7 +209,8 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   modalInput: {
-    fontSize: 18,
+    fontFamily: "fink-heavy",
+    fontSize: moderateScale(30), 
     color: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#fff",
@@ -235,6 +236,27 @@ const styles = StyleSheet.create({
     fontFamily: 'fink-heavy',
     color: "#fff",
     fontSize: moderateScale(30), 
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  closeButton: {
+    width: moderateScale(130),
+    height: moderateScale(50),
+    top: "10%", 
+    left: "25%", 
+    backgroundColor: '#e7e9c2',
+    borderRadius: 5,
+  },
+  closeText: {
+    textAlign: "center",
+    color: '#bd8d56',
+    fontSize: moderateScale(30), 
+    fontFamily: "fink-heavy",
   },
   
   

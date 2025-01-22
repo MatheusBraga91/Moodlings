@@ -29,18 +29,21 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: "fink-heavy",
-    fontSize: 18,
+    fontSize: moderateScale(30),
     color: 'white',
   },
 
   // Styles for displaying user info
   testText: {
-    top: "3%",
+    top: "7%",
     fontFamily: "fink-heavy",
     fontSize: moderateScale(30),
     color: "#fff",
     textAlign: "center",
     marginVertical: 5,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)', 
+    textShadowOffset: { width: 1, height: 1 }, 
+    textShadowRadius: 1, 
   },
   avatarImage: {
     top: "-7%",
@@ -129,6 +132,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   closeText: {
+    fontFamily: "fink-heavy",
     color: 'white',
     fontSize: 14,
   },
