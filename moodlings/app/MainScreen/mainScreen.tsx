@@ -1,16 +1,35 @@
-import React from 'react';
-import { View, Text, Image, ImageBackground } from 'react-native';
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import styles from "./mainStyles";
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  Modal,
+  TouchableOpacity,
+} from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import styles from './mainStyles';
 import { THEMES } from '../cardThemes/themes'; // Adjust the path as needed
 
 const MainScreen = () => {
   // Accessing user data from Redux
   const userInfo = useSelector((state: any) => state.user); // Adjust 'state.user' based on your Redux structure
-  
-  // Set default theme (can be dynamically updated later)
-  const currentTheme = 'yogurt';  // Set to 'grape' by default
+
+  // Set default theme and mood
+  const currentTheme = 'grape'; // Set to 'grape' by default
+  const [mood, setMood] = useState<string | null>(null); // State for the selected mood
+  const [isModalVisible, setModalVisible] = useState(false); // State to control modal visibility
+
+  // Open and close modal
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
+  // Handle mood selection
+  const selectMood = (selectedMood: string) => {
+    setMood(selectedMood); // Set the selected mood
+    closeModal(); // Close the modal
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -26,13 +45,10 @@ const MainScreen = () => {
         imageStyle={styles.cardBackgroundImage} // Optional: Customize how the image is displayed
       >
         <Text style={[styles.testText, { color: THEMES[currentTheme].textColor }]}>
-          Name: {userInfo.name}
-        </Text>
-        <Text style={[styles.testText, { color: THEMES[currentTheme].textColor }]}>
-          Date of Birth: {userInfo.dateOfBirth}
+          {userInfo.name}
         </Text>
 
-        <View style={styles.zodiacContainer}>
+        <View style={[styles.zodiacContainer, { backgroundColor: THEMES[currentTheme].avatarContainerColor }]}>
           <Image source={userInfo.zodiacSymbol} style={styles.zodiacImage} />
         </View>
 
@@ -41,13 +57,42 @@ const MainScreen = () => {
           <Image source={userInfo.avatar} style={styles.avatarImage} />
         </View>
 
-        {/* Mood container */}
-        <View style={[styles.moodContainer, { backgroundColor: THEMES[currentTheme].moodContainerColor }]}>
+        {/* Mood Container */}
+        <TouchableOpacity
+          style={[styles.moodContainer, { backgroundColor: THEMES[currentTheme].moodContainerColor }]}
+          onPress={openModal}
+        >
           <Text style={[styles.moodText, { color: THEMES[currentTheme].textColor }]}>
-            Happy {/* Mood text can be dynamically updated */}
+            {mood ? mood : 'Click to set!'}
           </Text>
-        </View>
+        </TouchableOpacity>
       </ImageBackground>
+
+      {/* Modal for Mood Selection */}
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Select Your Mood</Text>
+            {['Happy', 'Sad', 'Angry'].map((m) => (
+              <TouchableOpacity
+                key={m}
+                style={styles.moodOption}
+                onPress={() => selectMood(m)}
+              >
+                <Text style={styles.moodText}>{m}</Text>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <Text style={styles.closeText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Bottom Container */}
       <View style={styles.bottomContainer}>

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 0.28, // 28% of the screen height
-    backgroundColor: 'blue', // Blue background for top container
+    backgroundColor: 'blue', 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flex: 0.28, // 28% of the screen height
-    backgroundColor: 'pink', // Pink background for bottom container
+    backgroundColor: 'pink', 
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
 
   // Styles for displaying user info
   testText: {
+    top: "3%",
     fontFamily: "fink-heavy",
-    fontSize: 16,
-    color: "#fff", // Or any color that contrasts with the background
+    fontSize: moderateScale(30),
+    color: "#fff",
     textAlign: "center",
     marginVertical: 5,
   },
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   avatarContainer: {
-    top: "-10%",
+    top: "5%",
     width: moderateScale(200),
     height: moderateScale(180),
     alignItems: "center",
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
 
   moodContainer: {
-    top: "-14%",
+    top: "0%",
     width: moderateScale(170
     ),
     height: moderateScale(50),
@@ -70,24 +71,68 @@ const styles = StyleSheet.create({
   moodText: {
     fontFamily: "fink-heavy",
     fontSize: moderateScale(30),
-    color: "#fff", // Or any color that contrasts with the background
+    color: "#fff", 
     textAlign: "center",
     marginVertical: 5,
   },
   zodiacContainer: {
+    position: "absolute",
+    top: "24%", 
+    left: "75%",  
+    width: moderateScale(53), 
+    height: moderateScale(51),
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: (width * 0.6) / 2, 
   },
   zodiacImage: {
-    width: 20, // Adjust based on your design
-    height: 20, // Adjust based on your design
-    marginVertical: 10,
+    width: moderateScale(35), 
+    height: moderateScale(35),
+    resizeMode: "contain",
   },
   footerText: {
     fontSize: 14,
-    color: "#fff", // Or any color that fits your design
+    color: "#fff", 
     textAlign: "center",
   },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '80%',
+    backgroundColor: 'black',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  moodOption: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    width: '100%',
+    alignItems: 'center',
+  },
+  closeButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#f44336',
+    borderRadius: 5,
+  },
+  closeText: {
+    color: 'white',
+    fontSize: 14,
+  },
 });
+
 
 export default styles;

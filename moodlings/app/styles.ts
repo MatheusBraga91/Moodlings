@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
     overflow: "hidden", 
+    backgroundColor: "#bce2ff",
   },
   backgroundImage: {
     flex: 1,

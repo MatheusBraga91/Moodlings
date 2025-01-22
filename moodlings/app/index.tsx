@@ -24,9 +24,9 @@ import { useRouter } from "expo-router";  // Importing useRouter for navigation
 
 // Avatars and Zodiac symbols setup
 const avatars = {
-  bunny: require("../assets/avatars/bunny.png"),
-  racoon: require("../assets/avatars/racoon.png"),
-  fox: require("../assets/avatars/fox.png"),
+  bunny: require("../assets/avatars/bunny/bunny.png"),
+  racoon: require("../assets/avatars/racoon/racoon.png"),
+  fox: require("../assets/avatars/fox/fox.png"),
 };
 
 const zodiacSymbols = {
