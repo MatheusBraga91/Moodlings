@@ -1,42 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Mood, AvatarType } from '@/app/MainScreen/avatarMap';
 
-// Define initial state
 interface UserState {
   name: string;
-  avatar: string;
+  avatar: AvatarType; // Store the selected avatar type (e.g., 'bunny', 'fox', 'raccoon')
   dateOfBirth: string;
   zodiacSymbol: string;
-  mood: string;
-  avatarMood: string;
+  mood: Mood; // Mood is strictly typed
 }
 
 const initialState: UserState = {
   name: '',
-  avatar: '',
+  avatar: 'bunny', // Default avatar type
   dateOfBirth: '',
   zodiacSymbol: '',
-  mood: '',  // No mood initially
-  avatarMood: '',  // No mood expression initially
+  mood: 'Default', // Default mood
 };
 
-// Create user slice
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserInfo: (state, action: PayloadAction<{ name: string; avatar: string; dateOfBirth: string; zodiacSymbol: string }>) => {
+    setUserInfo: (state, action: PayloadAction<{ name: string; avatar: AvatarType; dateOfBirth: string; zodiacSymbol: string }>) => {
       state.name = action.payload.name;
-      state.avatar = action.payload.avatar;
+      state.avatar = action.payload.avatar; // Store the avatar type
       state.dateOfBirth = action.payload.dateOfBirth;
       state.zodiacSymbol = action.payload.zodiacSymbol;
     },
-    setMood: (state, action: PayloadAction<string>) => {
-      state.mood = action.payload;
-      state.avatarMood = `${state.avatar}${action.payload}.png`; // e.g., "foxsad.png"
+    setMood: (state, action: PayloadAction<Mood>) => {
+      state.mood = action.payload; // Update the user's mood
     },
   },
 });
 
-// Export actions and reducer
 export const { setUserInfo, setMood } = userSlice.actions;
 export default userSlice.reducer;

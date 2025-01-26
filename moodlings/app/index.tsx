@@ -21,14 +21,12 @@ import { useDispatch } from "react-redux";
 import { setUserInfo } from "../redux/userSlice";
 import { getZodiacSign } from "./zodiac";
 import styles from "./styles";
-import { useRouter } from "expo-router";  // Importing useRouter for navigate
+import { useRouter } from "expo-router"; // Importing useRouter for navigate
+import avatarMap, { AvatarType, Mood } from "./MainScreen/avatarMap";
 
 // Avatars and Zodiac symbols setup
-const avatars = {
-  bunny: require("../assets/avatars/bunny/bunny.png"),
-  racoon: require("../assets/avatars/racoon/racoon.png"),
-  fox: require("../assets/avatars/fox/fox.png"),
-};
+const initialAvatarType: AvatarType = "bunny"; // Default avatar type
+const initialMood: Mood = "Default"; // Default mood
 
 const zodiacSymbols = {
   default: require("../assets/zodiac/default.png"),
@@ -47,16 +45,16 @@ const zodiacSymbols = {
 };
 
 export default function Index() {
-  const [currentAvatar, setCurrentAvatar] = useState(avatars.bunny);
+  const [currentAvatarType, setCurrentAvatarType] = useState<AvatarType>(initialAvatarType);
   const [fontLoaded, setFontLoaded] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
   const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState(zodiacSymbols.default);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [name, setName] = useState("");
-  
+
   const dispatch = useDispatch();
-  const router = useRouter();  // Initialize useRouter for navigate
+  const router = useRouter(); // Initialize useRouter for navigate
 
   useEffect(() => {
     const loadFont = async () => {
@@ -69,23 +67,17 @@ export default function Index() {
   }, []);
 
   const changeAvatarRight = () => {
-    if (currentAvatar === avatars.bunny) {
-      setCurrentAvatar(avatars.fox);
-    } else if (currentAvatar === avatars.fox) {
-      setCurrentAvatar(avatars.racoon);
-    } else {
-      setCurrentAvatar(avatars.bunny);
-    }
+    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon"];
+    const currentIndex = avatarTypes.indexOf(currentAvatarType);
+    const nextIndex = (currentIndex + 1) % avatarTypes.length;
+    setCurrentAvatarType(avatarTypes[nextIndex]);
   };
 
   const changeAvatarLeft = () => {
-    if (currentAvatar === avatars.bunny) {
-      setCurrentAvatar(avatars.racoon);
-    } else if (currentAvatar === avatars.racoon) {
-      setCurrentAvatar(avatars.fox);
-    } else {
-      setCurrentAvatar(avatars.bunny);
-    }
+    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon"];
+    const currentIndex = avatarTypes.indexOf(currentAvatarType);
+    const nextIndex = (currentIndex - 1 + avatarTypes.length) % avatarTypes.length;
+    setCurrentAvatarType(avatarTypes[nextIndex]);
   };
 
   const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
@@ -98,10 +90,8 @@ export default function Index() {
     setShowDatePicker(false);
   };
 
-  // REDUX SAVE INFO!!
   const handleCreateUser = () => {
     if (name) {
-      // Show confirmation alert before saving
       Alert.alert(
         "Create your profile?",
         "Do you want to save your profile information?",
@@ -114,16 +104,16 @@ export default function Index() {
           {
             text: "Yes",
             onPress: () => {
-              // Dispatch info to Redux
-              dispatch(setUserInfo({
-                name: name,
-                avatar: currentAvatar,
-                dateOfBirth: date.toLocaleDateString(),
-                zodiacSymbol: currentZodiacSymbol,
-              }));
+              dispatch(
+                setUserInfo({
+                  name: name,
+                  avatar: currentAvatarType,
+                  dateOfBirth: date.toLocaleDateString(),
+                  zodiacSymbol: currentZodiacSymbol,
+                })
+              );
 
               alert("User information saved!");
-              // Navigate to main screen after profile creation
               router.push("../MainScreen/mainScreen");
             },
           },
@@ -142,7 +132,6 @@ export default function Index() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={0}
       >
-        {/* Touch event to dismis keyboard when tap outside */}
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <ImageBackground
             source={require("../assets/backgrounds/user_creation_background.png")}
@@ -161,7 +150,10 @@ export default function Index() {
               </Pressable>
 
               <View style={styles.avatarContainer}>
-                <Image source={currentAvatar} style={styles.avatarImage} />
+                <Image
+                  source={avatarMap[currentAvatarType][initialMood] as any} // Ensure proper type assertion
+                  style={styles.avatarImage}
+                />
               </View>
               <View style={styles.zodiacContainer}>
                 <Image source={currentZodiacSymbol} style={styles.zodiacSymbol} />
@@ -219,7 +211,6 @@ export default function Index() {
           </ImageBackground>
         </TouchableWithoutFeedback>
 
-        {/* Modal Screen */}
         <Modal visible={isModalVisible} transparent animationType="slide">
           <TouchableWithoutFeedback onPress={() => setIsModalVisible(false)}>
             <View style={styles.modalOverlay}>

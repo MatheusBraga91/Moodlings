@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 0.28, // 28% of the screen height
-    backgroundColor: 'blue', 
+    backgroundColor: 'blue',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flex: 0.28, // 28% of the screen height
-    backgroundColor: 'pink', 
+    backgroundColor: 'pink',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     marginVertical: 5,
-    textShadowColor: 'rgba(0, 0, 0, 0.3)', 
-    textShadowOffset: { width: 1, height: 1 }, 
-    textShadowRadius: 1, 
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
   },
   avatarImage: {
     top: "-7%",
-    width: moderateScale(200), 
+    width: moderateScale(200),
     height: moderateScale(200),
     resizeMode: "contain",
   },
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: moderateScale(180),
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: (width * 0.6) / 2, 
+    borderRadius: (width * 0.6) / 2,
     backgroundColor: "#e7e9c2",
   },
 
@@ -68,34 +68,34 @@ const styles = StyleSheet.create({
     height: moderateScale(50),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50, 
+    borderRadius: 50,
   },
 
   moodText: {
     fontFamily: "fink-heavy",
     fontSize: moderateScale(30),
-    color: "#fff", 
+    color: "#fff",
     textAlign: "center",
     marginVertical: 5,
   },
   zodiacContainer: {
     position: "absolute",
-    top: "24%", 
-    left: "75%",  
-    width: moderateScale(53), 
+    top: "24%",
+    left: "75%",
+    width: moderateScale(53),
     height: moderateScale(51),
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: (width * 0.6) / 2, 
+    borderRadius: (width * 0.6) / 2,
   },
   zodiacImage: {
-    width: moderateScale(35), 
+    width: moderateScale(35),
     height: moderateScale(35),
     resizeMode: "contain",
   },
   footerText: {
     fontSize: 14,
-    color: "#fff", 
+    color: "#fff",
     textAlign: "center",
   },
 
