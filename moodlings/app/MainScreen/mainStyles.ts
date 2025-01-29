@@ -136,6 +136,34 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
+
+  calendarButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#f44336',
+    borderRadius: 5,
+  },
+
+  calendarButtonText: {
+    fontFamily: "fink-heavy",
+    color: 'white',
+    fontSize: 14,
+  },
+
+
+  addMoodButton: {
+    backgroundColor: '#007bff', // Button background
+    padding: 12, // Padding for the button
+    borderRadius: 8,
+    alignItems: 'center', // Center the text inside the button
+    justifyContent: 'center',
+  },
+  addMoodText: {
+    fontFamily: "fink-heavy",
+    color: '#ffffff', // Text color
+    fontSize: 16, // Text size
+    fontWeight: 'bold',
+  },
 });
 
 

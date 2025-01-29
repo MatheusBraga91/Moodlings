@@ -4,66 +4,72 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useRouter } from 'expo-router';
 import styles from './mainStyles';
 import { THEMES } from '../cardThemes/themes';
 import avatarMap, { AvatarType, Mood } from './avatarMap';
-import { setMood } from '../../redux/userSlice'; // Import the setMood action
+import { setMood, triggerAddMood, incrementContainerUsage } from '../../redux/userSlice';
 
 const MainScreen = () => {
   const dispatch = useDispatch();
-  // Accessing user data from Redux
-  const userInfo = useSelector((state: RootState) => state.user); // 'state.user' based on Redux structure
+  const router = useRouter();
 
-  // Set default theme and mood
-  const currentTheme = 'garden'; // Set 'garden' by default
-  const [isModalVisible, setModalVisible] = useState(false); // State to control modal visibility
+  // data from Redux
+  const userInfo = useSelector((state: RootState) => state.user);
 
-  // Open and close modal
+  // default theme and mood
+  const currentTheme = 'garden';
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-  // Handle mood selection with Redux
+  //mood selection with Redux
   const selectMood = (selectedMood: Mood) => {
-    dispatch(setMood(selectedMood)); // Dispatch selected mood to Redux
-    closeModal(); // Close modal after selection
+    dispatch(setMood(selectedMood));
+    closeModal();
   };
 
-  // Log the user info from Redux when the page loads
+  // Log user info when the page loads
   useEffect(() => {
-    console.log('User Info from Redux:');
-    console.log('Name:', userInfo.name);
-    console.log('Avatar:', userInfo.avatar);
-    console.log('Mood:', userInfo.mood);
-    console.log('Zodiac Symbol:', userInfo.zodiacSymbol);
-    console.log('Date of Birth:', userInfo.dateOfBirth);
-  }, [userInfo]); // Dependency array to run the effect whenever `userInfo` changes
+    console.log('User Info from Redux:', userInfo);
+  }, [userInfo]);
 
-  // Get the avatar image based on user info
+  // avatar image based on user info
   const getAvatarImage = () => {
     const userAvatar = userInfo.avatar as AvatarType;
-    const userMood = userInfo.mood as Mood; // Fallback to 'default' if mood is not set
+    const userMood = userInfo.mood as Mood;
 
-    // Ensure the avatar and mood exist in the map
     if (avatarMap[userAvatar] && avatarMap[userAvatar][userMood]) {
       return avatarMap[userAvatar][userMood];
     }
-    return null; // Fallback to null if no matching avatar
+    return null;
   };
 
   const avatarImage = getAvatarImage();
+
+  // Handle Add Mood button click
+  const handleAddMood = () => {
+    dispatch(triggerAddMood()); // addMoodTriggered true
+    dispatch(incrementContainerUsage()); // Incrment container usage by 1
+  };
 
   return (
     <View style={styles.mainContainer}>
       {/* Top Container */}
       <View style={styles.topContainer}>
         <Text style={styles.text}>Top Container</Text>
+        <TouchableOpacity style={styles.addMoodButton} onPress={handleAddMood}>
+          <Text style={styles.addMoodText}>Add Mood</Text>
+        </TouchableOpacity>
+
       </View>
 
       {/* Middle Container with Card Background */}
       <ImageBackground
-        source={THEMES[currentTheme].cardImage} // Dynamically use the card image based on the theme
+        source={THEMES[currentTheme].cardImage}
         style={styles.middleContainer}
-        imageStyle={styles.cardBackgroundImage} // Customize how image is displayed
+        imageStyle={styles.cardBackgroundImage}
       >
         <Text style={[styles.testText, { color: THEMES[currentTheme].avatarContainerColor }]}>
           {userInfo.name}
@@ -103,7 +109,7 @@ const MainScreen = () => {
               <TouchableOpacity
                 key={mood}
                 style={styles.moodOption}
-                onPress={() => selectMood(mood as Mood)} // Cast to Mood here
+                onPress={() => selectMood(mood as Mood)}
               >
                 <Text style={styles.moodText}>{mood}</Text>
               </TouchableOpacity>
@@ -118,6 +124,12 @@ const MainScreen = () => {
       {/* Bottom Container */}
       <View style={styles.bottomContainer}>
         <Text style={styles.footerText}>Bottom Container</Text>
+        <TouchableOpacity
+          style={styles.calendarButton}
+          onPress={() => router.push('../Calendar/calendar')}
+        >
+          <Text style={styles.calendarButtonText}>calendar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

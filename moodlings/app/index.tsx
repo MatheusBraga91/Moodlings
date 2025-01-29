@@ -54,7 +54,7 @@ export default function Index() {
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
-  const router = useRouter(); // Initialize useRouter for navigate
+  const router = useRouter();
 
   useEffect(() => {
     const loadFont = async () => {
@@ -80,9 +80,12 @@ export default function Index() {
     setCurrentAvatarType(avatarTypes[nextIndex]);
   };
 
+  const [isDateSelected, setIsDateSelected] = useState(false); // New state to track if date is selected
+
   const handleDateChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
     if (selectedDate) {
       setDate(selectedDate);
+      setIsDateSelected(true); // Mark date as selected
       const zodiacSign = getZodiacSign(selectedDate);
       const zodiacImage = zodiacSymbols[zodiacSign as keyof typeof zodiacSymbols] || zodiacSymbols.default;
       setCurrentZodiacSymbol(zodiacImage);
@@ -151,7 +154,7 @@ export default function Index() {
 
               <View style={styles.avatarContainer}>
                 <Image
-                  source={avatarMap[currentAvatarType][initialMood] as any} // Ensure proper type assertion
+                  source={avatarMap[currentAvatarType][initialMood] as any}
                   style={styles.avatarImage}
                 />
               </View>
@@ -195,7 +198,9 @@ export default function Index() {
               </View>
               <View style={styles.dateContainer}>
                 <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
-                  <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+                  <Text style={styles.dateText}>
+                    {isDateSelected ? date.toLocaleDateString() : "Select date"}
+                  </Text>
                 </Pressable>
 
                 {showDatePicker && (
