@@ -132,26 +132,26 @@ const Calendar: React.FC = () => {
             const moodImage = getAvatarImage();
 
             if (moodImage) {
-                // Create a deep copy of dayImages to ensure immutability
+                // create deep copy of dayImages for immutability
                 const updatedDayImages = JSON.parse(JSON.stringify(dayImages));
 
-                // Ensure the current day has an array for images (initialized to empty if it doesn't exist)
+                // make current day hav an array for images
                 if (!updatedDayImages[currentDay]) {
                     updatedDayImages[currentDay] = [];
                 }
 
-                // Add the new image with an empty message and the current time
+                // Add new image with empty message andcurrent time
                 updatedDayImages[currentDay].push({
                     image: moodImage,
                     message: "",
-                    time: new Date().toLocaleTimeString(), // Add the current time
+                    time: new Date().toLocaleTimeString(), // current time
                 });
 
-                // Dispatch the updated images to Redux state
+                // Dispatch to Redux state
                 dispatch(setDayImages(updatedDayImages));
             }
 
-            // Reset the mood trigger after adding the image
+            // Reset mood trigger after adding the image
             dispatch(resetAddMoodTrigger());
         }
     }, [addMoodTriggered, currentDay, dispatch, dayImages]);
@@ -220,7 +220,7 @@ const Calendar: React.FC = () => {
                                     {
                                         translateY: slideAnim.interpolate({
                                             inputRange: [0, 1],
-                                            outputRange: [600, 0], // off-screen to center
+                                            outputRange: [600, 0],
                                         }),
                                     },
                                 ],
@@ -271,7 +271,7 @@ const Calendar: React.FC = () => {
                                         maxLength={400}
                                         value={messageInput}
                                         onChangeText={(text) => {
-                                            // Remove the time prefix before updating the message
+                                            // Remove the time prefix before updating message
                                             const message = text.replace(`${dayImages[selectedDay]?.[selectedImageIndex]?.time || "Unknown"}\n`, "");
                                             setMessageInput(message);
                                         }}

@@ -16,7 +16,7 @@ interface UserState {
   mood: Mood;
   addMoodTriggered: boolean;
   containerUsage: number;
-  dayImages: Record<number, DayImage[]>; // images for each day
+  dayImages: Record<number, DayImage[]>;
 }
 
 const initialState: UserState = {
@@ -27,7 +27,7 @@ const initialState: UserState = {
   mood: 'Default',
   addMoodTriggered: false,
   containerUsage: 0,
-  dayImages: {}, // Initialize the dayImages state
+  dayImages: {},
 };
 
 const userSlice = createSlice({

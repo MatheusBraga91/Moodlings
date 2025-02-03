@@ -35,19 +35,19 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         width: "100%",
-        margin: 0, // Remove any margin
-        padding: 0, // Remove any padding
-        justifyContent: "flex-start", // Align items to the left
+        margin: 0,
+        padding: 0,
+        justifyContent: "flex-start",
     },
     day: {
 
-        width: width / 7, // 7 days in a row, each taking 1/7 of the screen width
-        height: moderateScale(100), // Set a specific height for the day container
+        width: width / 7,
+        height: moderateScale(100),
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,
-        borderWidth: 0.1, // Border thickness of 1px
-        borderColor: "black", // Black border color
+        borderWidth: 0.1,
+        borderColor: "black",
     },
     filledDay: {
         backgroundColor: "#e0f7fa",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     dayText: {
         position: "absolute",
-        top: 0, // Place the text at the top of the container
+        top: 0,
         fontFamily: "fink-heavy",
         fontSize: moderateScale(11),
         fontWeight: "bold",
@@ -65,36 +65,36 @@ const styles = StyleSheet.create({
     },
 
     currentDay: {
-        backgroundColor: "#9cc1ff", // Yellow background for the current day
-        borderColor: "#fbc02d", // A different border color
-        borderWidth: 1, // Add a border to make it stand out
+        backgroundColor: "#9cc1ff",
+        borderColor: "#fbc02d",
+        borderWidth: 1,
     },
 
 
     smallSquaresContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-between", // Space between the small squares
-        width: "80%", // Take up 80% of the container width
-        marginTop: moderateScale(10), // Add some space below the day number
+        justifyContent: "space-between",
+        width: "80%",
+        marginTop: moderateScale(10),
     },
     smallSquare: {
-        width: "45%", // Each square takes up about 45% of the container width
-        height: moderateScale(20), // Small height for each square
-        marginBottom: moderateScale(5), // Space between squares
+        width: "45%",
+        height: moderateScale(20),
+        marginBottom: moderateScale(5),
     },
     smallSquareImage: {
-        width: "100%", // Each square takes up about 45% of the container width
-        height: moderateScale(20), // Small height for each square
-        backgroundColor: "#9cc1ff", // Yellow background for the current day
-        marginBottom: moderateScale(5), // Space between squares
+        width: "100%",
+        height: moderateScale(20),
+        backgroundColor: "#9cc1ff",
+        marginBottom: moderateScale(5),
     },
 
     smallSquareNumber: {
-        position: "absolute", // Ensures the text is positioned inside the square
-        fontSize: 12, // Adjust the font size to fit nicely
-        color: "rgba(0, 0, 0, 0.5)", // A subtle color for the numbers
-        zIndex: 1, // Ensure it appears above the image
+        position: "absolute",
+        fontSize: 12,
+        color: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1,
         textAlign: "center",
         width: "100%",
     },
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
-        flexGrow: 1, // Allow content to grow and push the button down
-        overflow: "visible", // Ensure contents are not clipped
+        flexGrow: 1,
+        overflow: "visible",
     },
 
 
@@ -139,12 +139,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: moderateScale(150),
-        padding: moderateScale(12), // Slightly larger padding for better effect
-        overflow: "visible", // Allow the image to extend beyond this container
+        padding: moderateScale(12),
+        overflow: "visible",
     },
     selectedImage: {
-        transform: [{ scale: 1.2 }], // Scale up when selected
-        overflow: "visible",  // Ensure it doesn't get cut
+        transform: [{ scale: 1.2 }],
+        overflow: "visible",
         resizeMode: "contain",
     },
 
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         alignItems: "center",
-        justifyContent: "center",  // Ensures text is centered
-        marginTop: "auto",  // Push the button to the bottom of the modal
-        width: "100%",  // Make the button fill the width
+        justifyContent: "center",
+        marginTop: "auto",
+        width: "100%",
     },
 
     closeButtonText: {
@@ -166,10 +166,10 @@ const styles = StyleSheet.create({
     },
 
     modalContentContainer: {
-        flexDirection: "row", // Set to row to display images horizontally
-        justifyContent: 'flex-start', // Adjust as per your needs, e.g., 'center' or 'space-around'
-        alignItems: 'center', // Ensure images are aligned properly
-        paddingBottom: 0, // Add padding to avoid clipping at the bottom
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingBottom: 0,
     },
 
     inputContainer: {
@@ -181,13 +181,13 @@ const styles = StyleSheet.create({
     },
 
     timeContainer: {
-        marginBottom: 5, // Space between the time and input field
+        marginBottom: 5,
     },
     timeText: {
         fontSize: moderateScale(16),
         fontFamily: 'fink-heavy',
-        color: '#bd8d56', // Or another color you prefer
-        textAlign: 'center', // Align to the left or center depending on your design
+        color: '#bd8d56',
+        textAlign: 'center',
     },
     inputField: {
         fontSize: moderateScale(20),

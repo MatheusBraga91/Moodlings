@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cardBackgroundImage: {
-    resizeMode: 'cover', // Ensures the image fills the container
+    resizeMode: 'cover',
   },
   bottomContainer: {
     flex: 0.28, // 28% of the screen height
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 
-  // Styles for displaying user info
   testText: {
     top: "7%",
     fontFamily: "fink-heavy",
@@ -87,8 +86,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: (width * 0.6) / 2,
-    borderWidth: 0.1, // Border thickness of 1px
-    borderColor: "black", // Black border color
+    borderWidth: 0.1,
+    borderColor: "black",
   },
   zodiacImage: {
     width: moderateScale(35),
@@ -155,16 +154,16 @@ const styles = StyleSheet.create({
 
 
   addMoodButton: {
-    backgroundColor: '#007bff', // Button background
-    padding: 12, // Padding for the button
+    backgroundColor: '#007bff',
+    padding: 12,
     borderRadius: 8,
-    alignItems: 'center', // Center the text inside the button
+    alignItems: 'center',
     justifyContent: 'center',
   },
   addMoodText: {
     fontFamily: "fink-heavy",
-    color: '#ffffff', // Text color
-    fontSize: 16, // Text size
+    color: '#ffffff',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 
