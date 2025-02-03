@@ -9,22 +9,24 @@ import styles from './mainStyles';
 import { THEMES } from '../cardThemes/themes';
 import avatarMap, { AvatarType, Mood } from './avatarMap';
 import { setMood, triggerAddMood, incrementContainerUsage } from '../../redux/userSlice';
+import { zodiacSymbols } from '../index';
 
 const MainScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // data from Redux
+  // Accessing user data from Redux
   const userInfo = useSelector((state: RootState) => state.user);
 
-  // default theme and mood
-  const currentTheme = 'garden';
+  // Set default theme and mood
+  const currentTheme = 'redish';
   const [isModalVisible, setModalVisible] = useState(false);
 
+  // Open and close modal
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-  //mood selection with Redux
+  // Handle mood selection with Redux
   const selectMood = (selectedMood: Mood) => {
     dispatch(setMood(selectedMood));
     closeModal();
@@ -35,10 +37,10 @@ const MainScreen = () => {
     console.log('User Info from Redux:', userInfo);
   }, [userInfo]);
 
-  // avatar image based on user info
+  // Get the avatar image based on user info
   const getAvatarImage = () => {
-    const userAvatar = userInfo.avatar as AvatarType;
-    const userMood = userInfo.mood as Mood;
+    const userAvatar = userInfo.avatar;
+    const userMood = userInfo.mood;
 
     if (avatarMap[userAvatar] && avatarMap[userAvatar][userMood]) {
       return avatarMap[userAvatar][userMood];
@@ -50,9 +52,11 @@ const MainScreen = () => {
 
   // Handle Add Mood button click
   const handleAddMood = () => {
-    dispatch(triggerAddMood()); // addMoodTriggered true
-    dispatch(incrementContainerUsage()); // Incrment container usage by 1
+    dispatch(triggerAddMood()); // Set addMoodTriggered to true
+    dispatch(incrementContainerUsage()); // Increment container usage by 1
   };
+
+  const zodiacImage = zodiacSymbols[userInfo.zodiacSymbol as keyof typeof zodiacSymbols] || zodiacSymbols.default
 
   return (
     <View style={styles.mainContainer}>
@@ -76,7 +80,7 @@ const MainScreen = () => {
         </Text>
 
         <View style={[styles.zodiacContainer, { backgroundColor: THEMES[currentTheme].avatarContainerColor }]}>
-          <Image source={userInfo.zodiacSymbol as any} style={styles.zodiacImage} />
+          <Image source={zodiacImage} style={styles.zodiacImage} />
         </View>
 
         {/* Avatar */}

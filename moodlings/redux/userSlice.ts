@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Mood, AvatarType } from '@/app/MainScreen/avatarMap';
 
+interface DayImage {
+  image: any; // image source
+  message: string; // message associated with the image
+  time: string; // time when the mood was set
+}
+
+
 interface UserState {
   name: string;
   avatar: AvatarType;
@@ -9,7 +16,7 @@ interface UserState {
   mood: Mood;
   addMoodTriggered: boolean;
   containerUsage: number;
-  dayImages: Record<number, (any | null)[]>; // Store images for each day
+  dayImages: Record<number, DayImage[]>; // images for each day
 }
 
 const initialState: UserState = {
@@ -59,16 +66,30 @@ const userSlice = createSlice({
       state.containerUsage = 0;
     },
     replaceFirstMood: (state) => {
-      // This reducer can remain as is or be expanded later.
+
     },
     setDayImages: (
       state,
-      action: PayloadAction<Record<number, (any | null)[]>>
+      action: PayloadAction<Record<number, DayImage[]>>
     ) => {
-      state.dayImages = action.payload; // Update the images for each day
+      state.dayImages = action.payload; // Update images and messages for each day
+    },
+    updateImageMessage: (
+      state,
+      action: PayloadAction<{
+        day: number;
+        imageIndex: number;
+        message: string;
+      }>
+    ) => {
+      const { day, imageIndex, message } = action.payload;
+      if (state.dayImages[day] && state.dayImages[day][imageIndex]) {
+        state.dayImages[day][imageIndex].message = message;
+      }
     },
   },
 });
+
 
 export const {
   setUserInfo,
@@ -78,6 +99,7 @@ export const {
   incrementContainerUsage,
   resetContainerUsage,
   setDayImages,
+  updateImageMessage,
 } = userSlice.actions;
 
 export default userSlice.reducer;

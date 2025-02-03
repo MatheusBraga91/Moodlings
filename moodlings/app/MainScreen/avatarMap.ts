@@ -1,7 +1,9 @@
+import { ImageProps } from "react-native";
+
 export type Mood = 'Default' | 'Happy' | 'Sad' | 'Angry';
 export type AvatarType = 'bunny' | 'fox' | 'raccoon';
-
-const avatarMap: Record<AvatarType, Record<Mood, AvatarType>> = {
+type AvatarMap = Record<AvatarType, Record<Mood, ImageProps>>
+const avatarMap: AvatarMap = {
     bunny: {
         Default: require('../../assets/avatars/bunny/bunnydefault.png'),
         Happy: require('../../assets/avatars/bunny/bunnyhappy.png'),
@@ -23,3 +25,4 @@ const avatarMap: Record<AvatarType, Record<Mood, AvatarType>> = {
 };
 
 export default avatarMap;
+

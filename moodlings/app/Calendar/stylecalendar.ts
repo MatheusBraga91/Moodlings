@@ -103,15 +103,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 20,
         position: "absolute",
-        top: height * 0.1, // This centers the modal from the top, filling 80% of the screen height
-        left: width * 0.1, // This centers the modal horizontally, filling 80% of the screen width
-        width: width * 0.8, // Set width to 80% of the screen width
-        height: height * 0.8, // Set height to 80% of the screen height
+        top: height * 0.1,
+        left: width * 0.1,
+        width: width * 0.8,
+        height: height * 0.8,
         shadowColor: "#000",
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        flexDirection: "column", // Stack children vertically
+        flexDirection: "column",
     },
     modalTitle: {
         textAlign: "center",
@@ -125,12 +125,31 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "center",
         flexGrow: 1, // Allow content to grow and push the button down
+        overflow: "visible", // Ensure contents are not clipped
     },
+
+
     modalImage: {
-        width: "25%", // Each square takes up about 45% of the container width
-        height: moderateScale(120), // Small height for each square
+        width: moderateScale(65),
+        height: moderateScale(120),
+        resizeMode: "contain",
+
+    },
+    selectedImageContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: moderateScale(150),
+        padding: moderateScale(12), // Slightly larger padding for better effect
+        overflow: "visible", // Allow the image to extend beyond this container
+    },
+    selectedImage: {
+        transform: [{ scale: 1.2 }], // Scale up when selected
+        overflow: "visible",  // Ensure it doesn't get cut
         resizeMode: "contain",
     },
+
+
+
     closeButton: {
         backgroundColor: "red",
         padding: 10,
@@ -145,6 +164,54 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
     },
+
+    modalContentContainer: {
+        flexDirection: "row", // Set to row to display images horizontally
+        justifyContent: 'flex-start', // Adjust as per your needs, e.g., 'center' or 'space-around'
+        alignItems: 'center', // Ensure images are aligned properly
+        paddingBottom: 0, // Add padding to avoid clipping at the bottom
+    },
+
+    inputContainer: {
+        padding: 10,
+        marginTop: 10,
+        width: '100%',
+        height: '70%',
+
+    },
+
+    timeContainer: {
+        marginBottom: 5, // Space between the time and input field
+    },
+    timeText: {
+        fontSize: moderateScale(16),
+        fontFamily: 'fink-heavy',
+        color: '#bd8d56', // Or another color you prefer
+        textAlign: 'center', // Align to the left or center depending on your design
+    },
+    inputField: {
+        fontSize: moderateScale(20),
+        fontFamily: 'fink-heavy',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+        minHeight: 100,
+        width: '100%',
+        height: '80%',
+    },
+    saveButton: {
+        backgroundColor: '#007BFF',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    saveButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+
 
 
 

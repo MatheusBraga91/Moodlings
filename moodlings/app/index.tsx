@@ -14,6 +14,7 @@ import {
   Platform,
   Alert,
   TouchableOpacity,
+  ImageProps,
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -27,8 +28,9 @@ import avatarMap, { AvatarType, Mood } from "./MainScreen/avatarMap";
 // Avatars and Zodiac symbols setup
 const initialAvatarType: AvatarType = "bunny"; // Default avatar type
 const initialMood: Mood = "Default"; // Default mood
+type ZodiacSymbols = Record<string, ImageProps>
 
-const zodiacSymbols = {
+export const zodiacSymbols: ZodiacSymbols = {
   default: require("../assets/zodiac/default.png"),
   aries: require("../assets/zodiac/aries.png"),
   taurus: require("../assets/zodiac/taurus.png"),
@@ -44,12 +46,13 @@ const zodiacSymbols = {
   pisces: require("../assets/zodiac/pisces.png"),
 };
 
+
 export default function Index() {
   const [currentAvatarType, setCurrentAvatarType] = useState<AvatarType>(initialAvatarType);
   const [fontLoaded, setFontLoaded] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
-  const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState(zodiacSymbols.default);
+  const [currentZodiacSymbol, setCurrentZodiacSymbol] = useState('default');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [name, setName] = useState("");
 
@@ -87,14 +90,15 @@ export default function Index() {
       setDate(selectedDate);
       setIsDateSelected(true); // Mark date as selected
       const zodiacSign = getZodiacSign(selectedDate);
-      const zodiacImage = zodiacSymbols[zodiacSign as keyof typeof zodiacSymbols] || zodiacSymbols.default;
-      setCurrentZodiacSymbol(zodiacImage);
+      setCurrentZodiacSymbol(zodiacSign);
     }
     setShowDatePicker(false);
   };
 
   const handleCreateUser = () => {
+    console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
     if (name) {
+      console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
       Alert.alert(
         "Create your profile?",
         "Do you want to save your profile information?",
@@ -117,6 +121,7 @@ export default function Index() {
               );
 
               alert("User information saved!");
+              console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
               router.push("../MainScreen/mainScreen");
             },
           },
@@ -154,12 +159,12 @@ export default function Index() {
 
               <View style={styles.avatarContainer}>
                 <Image
-                  source={avatarMap[currentAvatarType][initialMood] as any}
+                  source={avatarMap[currentAvatarType][initialMood]}
                   style={styles.avatarImage}
                 />
               </View>
               <View style={styles.zodiacContainer}>
-                <Image source={currentZodiacSymbol} style={styles.zodiacSymbol} />
+                <Image source={zodiacSymbols[currentZodiacSymbol]} style={styles.zodiacSymbol} />
               </View>
               <View style={styles.arrowLeft}>
                 <Pressable onPress={changeAvatarLeft} style={styles.arrowButtonLeft}>

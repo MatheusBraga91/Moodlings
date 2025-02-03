@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: (width * 0.6) / 2,
+    borderWidth: 0.1, // Border thickness of 1px
+    borderColor: "black", // Black border color
   },
   zodiacImage: {
     width: moderateScale(35),
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
+    color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -163,6 +166,18 @@ const styles = StyleSheet.create({
     color: '#ffffff', // Text color
     fontSize: 16, // Text size
     fontWeight: 'bold',
+  },
+
+  horoscopeText: {
+    fontFamily: "fink-heavy",
+    color: 'white',
+    fontSize: 14,
+  },
+
+  zodiacTitle: {
+    fontFamily: "fink-heavy",
+    color: 'white',
+    fontSize: 14,
   },
 });
 
