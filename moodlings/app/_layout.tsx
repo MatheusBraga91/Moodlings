@@ -1,9 +1,10 @@
 import { Stack } from "expo-router";
 import { Provider } from "react-redux";
-import store from "../redux/store"; 
+import store from "../redux/store";
 import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import 'react-native-gesture-handler';
 
 // Global Styles
 const globalStyles = {
@@ -27,7 +28,7 @@ export default function RootLayout() {
   }, []);
 
   if (!fontLoaded) {
-    return <View><Text>Loading...</Text></View>; 
+    return <View><Text>Loading...</Text></View>;
   }
 
   return (

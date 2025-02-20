@@ -9,17 +9,18 @@ import styles from './mainStyles';
 import { THEMES } from '../cardThemes/themes';
 import avatarMap, { AvatarType, Mood } from './avatarMap';
 import { setMood, triggerAddMood, incrementContainerUsage } from '../../redux/userSlice';
+import { DETAILS, DetailsCategory } from '../EditScreen/details';
 import { zodiacSymbols } from '../index';
+import 'react-native-gesture-handler';
 
 const MainScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Accessing user data from Redux
+  // Accessing user data and card theme from Redux
   const userInfo = useSelector((state: RootState) => state.user);
-
-  // Set default theme and mood
-  const currentTheme = 'redish';
+  const currentTheme = useSelector((state: RootState) => state.cardTheme.currentTheme);
+  const currentDetail = useSelector((state: RootState) => state.cardTheme.currentDetail); // Get current detail
   const [isModalVisible, setModalVisible] = useState(false);
 
   // Open and close modal
@@ -56,25 +57,35 @@ const MainScreen = () => {
     dispatch(incrementContainerUsage()); // Increment container usage by 1
   };
 
-  const zodiacImage = zodiacSymbols[userInfo.zodiacSymbol as keyof typeof zodiacSymbols] || zodiacSymbols.default
+  const calendarIcon = require('../../assets/icons/calendar.png');
+  const editIcon = require('../../assets/icons/edit.png');
+  const socialIcon = require('../../assets/icons/social.png');
+  const giftsIcon = require('../../assets/icons/gifts.png');
+
+  const zodiacImage = zodiacSymbols[userInfo.zodiacSymbol as keyof typeof zodiacSymbols] || zodiacSymbols.default;
 
   return (
     <View style={styles.mainContainer}>
       {/* Top Container */}
       <View style={styles.topContainer}>
-        <Text style={styles.text}>Top Container</Text>
+        <Text style={styles.text}>Hi {userInfo.name}, how are you feeling today? </Text>
         <TouchableOpacity style={styles.addMoodButton} onPress={handleAddMood}>
           <Text style={styles.addMoodText}>Add Mood</Text>
         </TouchableOpacity>
-
       </View>
 
       {/* Middle Container with Card Background */}
       <ImageBackground
-        source={THEMES[currentTheme].cardImage}
+        source={THEMES[currentTheme].cardImage} // Use currentTheme from Redux
         style={styles.middleContainer}
         imageStyle={styles.cardBackgroundImage}
       >
+        {currentDetail && (
+          <Image
+            source={typeof currentDetail === 'string' ? { uri: currentDetail } : currentDetail}
+            style={styles.detailOverlay} // Add a style for positioning the detail
+          />
+        )}
         <Text style={[styles.testText, { color: THEMES[currentTheme].avatarContainerColor }]}>
           {userInfo.name}
         </Text>
@@ -127,12 +138,27 @@ const MainScreen = () => {
 
       {/* Bottom Container */}
       <View style={styles.bottomContainer}>
-        <Text style={styles.footerText}>Bottom Container</Text>
         <TouchableOpacity
           style={styles.calendarButton}
           onPress={() => router.push('../Calendar/calendar')}
         >
-          <Text style={styles.calendarButtonText}>calendar</Text>
+          <Image source={calendarIcon} style={styles.calendarIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => router.push('../EditScreen/editScreen')}
+        >
+          <Image source={editIcon} style={styles.editIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.socialButton}
+        >
+          <Image source={socialIcon} style={styles.socialIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.giftsButton}
+        >
+          <Image source={giftsIcon} style={styles.giftsIcon} />
         </TouchableOpacity>
       </View>
     </View>

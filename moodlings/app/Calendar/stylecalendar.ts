@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     smallSquareImage: {
         width: "100%",
         height: moderateScale(20),
-        backgroundColor: "#9cc1ff",
         marginBottom: moderateScale(5),
     },
 

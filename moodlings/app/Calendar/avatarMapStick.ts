@@ -1,5 +1,5 @@
 export type Mood = 'Happy' | 'Sad' | 'Angry';
-export type AvatarType = 'bunny' | 'fox' | 'raccoon';
+export type AvatarType = 'bunny' | 'fox' | 'raccoon' | 'elephant' | 'monkey' | 'opossum';
 
 const avatarMap: Record<AvatarType, Record<Mood, AvatarType>> = {
     bunny: {
@@ -16,6 +16,21 @@ const avatarMap: Record<AvatarType, Record<Mood, AvatarType>> = {
         Happy: require('../../assets/avatars/racoon/sticker/racoonhappy.png'),
         Sad: require('../../assets/avatars/racoon/sticker/racoonsad.png'),
         Angry: require('../../assets/avatars/racoon/sticker/racoonangry.png'),
+    },
+    elephant: {
+        Happy: require('../../assets/avatars/elephant/sticker/elephanthappy.png'),
+        Sad: require('../../assets/avatars/elephant/sticker/elephantsad.png'),
+        Angry: require('../../assets/avatars/elephant/sticker/elephantangry.png'),
+    },
+    monkey: {
+        Happy: require('../../assets/avatars/monkey/sticker/monkeyhappy.png'),
+        Sad: require('../../assets/avatars/monkey/sticker/monkeysad.png'),
+        Angry: require('../../assets/avatars/monkey/sticker/monkeyangry.png'),
+    },
+    opossum: {
+        Happy: require('../../assets/avatars/opossum/sticker/opossumhappy.png'),
+        Sad: require('../../assets/avatars/opossum/sticker/opossumsad.png'),
+        Angry: require('../../assets/avatars/opossum/sticker/opossumangry.png'),
     },
 };
 

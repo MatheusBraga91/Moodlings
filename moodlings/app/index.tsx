@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import 'react-native-gesture-handler';
 import {
   Image,
   ImageBackground,
@@ -70,14 +71,14 @@ export default function Index() {
   }, []);
 
   const changeAvatarRight = () => {
-    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon"];
+    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon", "elephant", "monkey", "opossum"];
     const currentIndex = avatarTypes.indexOf(currentAvatarType);
     const nextIndex = (currentIndex + 1) % avatarTypes.length;
     setCurrentAvatarType(avatarTypes[nextIndex]);
   };
 
   const changeAvatarLeft = () => {
-    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon"];
+    const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon", "elephant", "monkey", "opossum"];
     const currentIndex = avatarTypes.indexOf(currentAvatarType);
     const nextIndex = (currentIndex - 1 + avatarTypes.length) % avatarTypes.length;
     setCurrentAvatarType(avatarTypes[nextIndex]);
@@ -96,9 +97,7 @@ export default function Index() {
   };
 
   const handleCreateUser = () => {
-    console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
     if (name) {
-      console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
       Alert.alert(
         "Create your profile?",
         "Do you want to save your profile information?",
@@ -121,7 +120,6 @@ export default function Index() {
               );
 
               alert("User information saved!");
-              console.log('DEBUG PRA VER OQUE TA ACONTECENDO AQUI ==============>>>>>>')
               router.push("../MainScreen/mainScreen");
             },
           },

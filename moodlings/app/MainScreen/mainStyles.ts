@@ -8,33 +8,37 @@ const styles = StyleSheet.create({
     flex: 1, // Ensures the whole screen is taken up
   },
   topContainer: {
-    flex: 0.28, // 28% of the screen height
-    backgroundColor: 'blue',
+    flex: 0.25,
+    backgroundColor: '#80aaff',
     justifyContent: 'center',
     alignItems: 'center',
   },
   middleContainer: {
-    flex: 0.54, // 54% of the screen height
+    flex: 0.60, // 54% of the screen height
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  bottomContainer: {
+    flexDirection: "row",
+    flex: 0.15, // 28% of the screen height
+    backgroundColor: '#80aaff',
+    justifyContent: 'center',
+
   },
   cardBackgroundImage: {
     resizeMode: 'cover',
   },
-  bottomContainer: {
-    flex: 0.28, // 28% of the screen height
-    backgroundColor: 'pink',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   text: {
+    top: "-10%",
     fontFamily: "fink-heavy",
     fontSize: moderateScale(30),
     color: 'white',
   },
 
   testText: {
-    top: "7%",
+    top: "2%",
     fontFamily: "fink-heavy",
     fontSize: moderateScale(30),
     color: "#fff",
@@ -94,11 +98,6 @@ const styles = StyleSheet.create({
     height: moderateScale(35),
     resizeMode: "contain",
   },
-  footerText: {
-    fontSize: 14,
-    color: "#fff",
-    textAlign: "center",
-  },
 
   modalOverlay: {
     flex: 1,
@@ -139,20 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 
-  calendarButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#f44336',
-    borderRadius: 5,
-  },
-
-  calendarButtonText: {
-    fontFamily: "fink-heavy",
-    color: 'white',
-    fontSize: 14,
-  },
-
-
   addMoodButton: {
     backgroundColor: '#007bff',
     padding: 12,
@@ -178,6 +163,77 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
+
+
+
+  calendarButton: {
+    width: moderateScale(75),
+    height: moderateScale(65),
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+
+  },
+  calendarIcon: {
+    width: moderateScale(53),
+    height: moderateScale(51),
+    resizeMode: 'contain',
+  },
+
+  editButton: {
+    width: moderateScale(60),
+    height: moderateScale(65),
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  editIcon: {
+    left: '-15%',
+    width: moderateScale(53),
+    height: moderateScale(51),
+    resizeMode: 'contain',
+  },
+  socialButton: {
+    width: moderateScale(100),
+    height: moderateScale(65),
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  socialIcon: {
+    top: '-35%',
+    width: moderateScale(100),
+    height: moderateScale(80),
+    resizeMode: 'contain',
+  },
+
+  giftsButton: {
+    width: moderateScale(75),
+    height: moderateScale(65),
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  giftsIcon: {
+    top: '5%',
+    width: moderateScale(53),
+    height: moderateScale(51),
+    resizeMode: 'contain',
+  },
+  detailOverlay: {
+    position: 'absolute', // Position the detail overlay on top of the card
+    width: '105%',
+    top: -360, // Align to the top of the card
+    left: -7, // Align to the left of the card
+    right: 0, // Align to the right of the card
+    bottom: 0, // Align to the bottom of the card
+    resizeMode: 'contain', // Ensure the image fits within the card without distortion
+  }
+
 });
 
 
