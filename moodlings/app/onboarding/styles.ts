@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(62),
     color: "#bd8d56",
     textAlign: "center",
+    top: "-40%",
+
   },
   middleContainer: {
     minHeight: 200,
@@ -106,11 +108,12 @@ const styles = StyleSheet.create({
     borderRadius: (width * 0.6) / 2,
     backgroundColor: "#e7e9c2",
   },
-  zodiacSymbol: {
+  zodiacImage: {
     width: moderateScale(35),
     height: moderateScale(35),
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
+
   lowerContainer: {
     minHeight: 150,
     height: height * 0.31,
@@ -259,6 +262,42 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(30),
     fontFamily: "fink-heavy",
   },
+
+  closeButtonYes: {
+    width: moderateScale(60),
+    height: moderateScale(50),
+    top: "10%",
+    backgroundColor: '#e7e9c2',
+    borderRadius: 5,
+    justifyContent: 'center',
+  },
+  closeButtonNo: {
+    width: moderateScale(60),
+    height: moderateScale(50),
+    top: "10%",
+    backgroundColor: '#FF6961',
+    borderRadius: 5,
+    justifyContent: 'center',
+  },
+  closeTextYes: {
+    textAlign: "center",
+    color: '#bd8d56',
+    fontSize: moderateScale(30),
+    fontFamily: "fink-heavy",
+  },
+  closeTextNo: {
+    textAlign: "center",
+    color: 'black',
+    fontSize: moderateScale(30),
+    fontFamily: "fink-heavy",
+  },
+  buttonRow: {
+    flexDirection: "row", // Align buttons horizontally
+    justifyContent: "space-between", // Add space between buttons
+    width: "100%", // Ensure the row takes full width
+    marginTop: 10, // Add some spacing above the buttons
+  },
+
 
 
 });

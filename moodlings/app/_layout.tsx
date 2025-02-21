@@ -33,7 +33,9 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <Stack>
+      <Stack screenOptions={{
+        headerShown: false, // Hide the header for all screens
+      }}>
         {/* Define routes here if needed */}
       </Stack>
     </Provider>

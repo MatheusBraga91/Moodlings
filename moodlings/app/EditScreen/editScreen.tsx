@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 import { THEMES } from '../cardThemes/themes';
 import { DETAILS, DetailsCategory } from '../EditScreen/details';
 import avatarMap from '../MainScreen/avatarMap';
-import { zodiacSymbols } from '../index';
+import { zodiacSymbols } from '../onboarding/create';
 import styles from './editStyles';
 import { setDetail, setTheme } from '../../redux/cardThemeSlice';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

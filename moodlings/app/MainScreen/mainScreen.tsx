@@ -10,7 +10,7 @@ import { THEMES } from '../cardThemes/themes';
 import avatarMap, { AvatarType, Mood } from './avatarMap';
 import { setMood, triggerAddMood, incrementContainerUsage } from '../../redux/userSlice';
 import { DETAILS, DetailsCategory } from '../EditScreen/details';
-import { zodiacSymbols } from '../index';
+import { zodiacSymbols } from '../onboarding/create';
 import 'react-native-gesture-handler';
 
 const MainScreen = () => {
