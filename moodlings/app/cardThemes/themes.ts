@@ -24,14 +24,14 @@ export const THEMES = {
   },
   redish: {
     textColor: '#fdc7a5',
-    zodiacImage: '#fdc7a5',
+    zodiacImage: '#c5653a',
     avatarContainerColor: '#ffbb89',
     moodContainerColor: '#c5653a',
     cardImage: require('../../assets/cards/redish.png'),
   },
   yogurt: {
     textColor: '#f9e5e7',
-    zodiacImage: '#f9e5e7',
+    zodiacImage: '#c27a7e',
     avatarContainerColor: '#e9c6ca',
     moodContainerColor: '#c27a7e',
     cardImage: require('../../assets/cards/yogurt.png'),
@@ -45,7 +45,7 @@ export const THEMES = {
   },
   dunes: {
     textColor: '#f9e5e7',
-    zodiacImage: '#f9e5e7',
+    zodiacImage: '#ac4e46',
     avatarContainerColor: '#fc7b51',
     moodContainerColor: '#ac4e46',
     cardImage: require('../../assets/cards/dunes.png'),

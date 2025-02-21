@@ -66,7 +66,7 @@ const EditScreen = () => {
           </Text>
 
           <View style={[styles.zodiacContainer, { backgroundColor: THEMES[currentTheme].avatarContainerColor }]}>
-            <Image source={zodiacImage} style={styles.zodiacImage} />
+            <Image source={zodiacImage} style={[styles.zodiacImage, { tintColor: THEMES[currentTheme].zodiacImage }]} />
           </View>
 
           {/* Avatar */}
