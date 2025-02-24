@@ -20,7 +20,7 @@ const EditScreen = () => {
   const [isThemeModalVisible, setThemeModalVisible] = useState(false);
   const [isStampModalVisible, setStampModalVisible] = useState(false); // Controls the Stamps modal
   const [isDetailModalVisible, setDetailModalVisible] = useState(false); // Controls the Detail modal
-  const [selectedCategory, setSelectedCategory] = useState<keyof typeof DETAILS | null>(null); // Tracks the selected category
+  const [selectedCategory, setSelectedCategory] = useState<DetailsCategory | null>(null); // Tracks the selected category
 
   // Get the avatar image based on user info
   const getAvatarImage = () => {
@@ -41,6 +41,12 @@ const EditScreen = () => {
     dispatch(setTheme(theme)); // Save the selected theme to Redux
   };
 
+  // Resolve the detail key to the actual image
+  const detailImage = currentDetail
+    ? Object.values(DETAILS)
+      .flatMap(category => Object.entries(category))
+      .find(([key]) => key === currentDetail)?.[1]
+    : null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -54,10 +60,10 @@ const EditScreen = () => {
           style={styles.middleContainer}
           imageStyle={styles.cardBackgroundImage}
         >
-          {currentDetail && (
+          {detailImage && (
             <Image
-              source={typeof currentDetail === 'string' ? { uri: currentDetail } : currentDetail}
-              style={styles.detailOverlay} // Add a style for positioning the detail
+              source={detailImage}
+              style={styles.detailOverlay}
             />
           )}
 
@@ -101,7 +107,7 @@ const EditScreen = () => {
           </TouchableOpacity>
         </View>
 
-
+        {/* Stamp Categories Modal */}
         <Modal
           visible={isStampModalVisible}
           animationType="slide"
@@ -113,11 +119,11 @@ const EditScreen = () => {
               {Object.keys(DETAILS).map((category) => (
                 <TouchableOpacity
                   key={category}
-                  style={styles.categoryOption} // Use a style for rounded containers
+                  style={styles.categoryOption}
                   onPress={() => {
-                    setSelectedCategory(category as keyof typeof DETAILS); // Set the selected category
-                    setStampModalVisible(false); // Close the Stamps modal
-                    setDetailModalVisible(true); // Open the Detail modal
+                    setSelectedCategory(category as DetailsCategory);
+                    setStampModalVisible(false);
+                    setDetailModalVisible(true);
                   }}
                 >
                   <Text style={styles.categoryText}>{category}</Text>
@@ -125,7 +131,6 @@ const EditScreen = () => {
               ))}
             </ScrollView>
 
-            {/* Close Button */}
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setStampModalVisible(false)}
@@ -135,6 +140,7 @@ const EditScreen = () => {
           </View>
         </Modal>
 
+        {/* Details Modal */}
         <Modal
           visible={isDetailModalVisible}
           animationType="slide"
@@ -143,20 +149,21 @@ const EditScreen = () => {
         >
           <View style={styles.modalContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-              {selectedCategory && DETAILS[selectedCategory].map((image, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.detailOption} // Use a style for rounded containers
-                  onPress={() => {
-                    dispatch(setDetail(image)); // Set the selected image as the current detail
-                  }}
-                >
-                  <Image source={image} style={styles.detailImage} />
-                </TouchableOpacity>
-              ))}
+              {selectedCategory &&
+                Object.entries(DETAILS[selectedCategory]).map(([detailId, detailImage]) => (
+                  <TouchableOpacity
+                    key={detailId}
+                    style={styles.detailOption}
+                    onPress={() => {
+                      dispatch(setDetail(detailId)); // Save the selected detail's ID
+                      setDetailModalVisible(false); // Close modal
+                    }}
+                  >
+                    <Image source={detailImage} style={styles.detailImage} />
+                  </TouchableOpacity>
+                ))}
             </ScrollView>
 
-            {/* Close Button */}
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setDetailModalVisible(false)}
@@ -165,8 +172,6 @@ const EditScreen = () => {
             </TouchableOpacity>
           </View>
         </Modal>
-
-
 
         {/* Themes Modal */}
         <Modal
@@ -191,7 +196,6 @@ const EditScreen = () => {
               ))}
             </ScrollView>
 
-            {/* Close Button */}
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setThemeModalVisible(false)}
@@ -200,10 +204,6 @@ const EditScreen = () => {
             </TouchableOpacity>
           </View>
         </Modal>
-
-
-
-
       </View>
     </GestureHandlerRootView>
   );

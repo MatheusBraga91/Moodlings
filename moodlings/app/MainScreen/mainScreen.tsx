@@ -64,6 +64,13 @@ const MainScreen = () => {
 
   const zodiacImage = zodiacSymbols[userInfo.zodiacSymbol as keyof typeof zodiacSymbols] || zodiacSymbols.default;
 
+  // Resolve the detail key to the actual image
+  const detailImage = currentDetail
+    ? Object.values(DETAILS)
+      .flatMap(category => Object.entries(category))
+      .find(([key]) => key === currentDetail)?.[1]
+    : null;
+
   return (
     <View style={styles.mainContainer}>
       {/* Top Container */}
@@ -80,10 +87,10 @@ const MainScreen = () => {
         style={styles.middleContainer}
         imageStyle={styles.cardBackgroundImage}
       >
-        {currentDetail && (
+        {detailImage && (
           <Image
-            source={typeof currentDetail === 'string' ? { uri: currentDetail } : currentDetail}
-            style={styles.detailOverlay} // Add a style for positioning the detail
+            source={detailImage}
+            style={styles.detailOverlay}
           />
         )}
         <Text style={[styles.testText, { color: THEMES[currentTheme].avatarContainerColor }]}>
