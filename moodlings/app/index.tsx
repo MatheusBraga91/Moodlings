@@ -8,10 +8,17 @@ const LoginScreen = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    // TODO: Implement login logic
+    // WE NEED TO IMPLEMENT THE LOGIC HERE AFTER WE CREATE THE SUPABASE , BUT FOR NOW LETS JUST KEEP THIS LIKE THIS AS PLACEHOLDER
     console.log('Logging in with:', email, password);
     router.push('/onboarding/create'); // Redirect to Onboarding Screen after login
   };
+
+  const handleSignup = () => {
+    // WE NEED TO IMPLEMENT THE LOGIC HERE AFTER WE CREATE THE SUPABASE , BUT FOR NOW LETS JUST KEEP THIS LIKE THIS AS PLACEHOLDER
+    console.log('Sign up with:', email, password);
+    router.push('/onboarding/create'); // Redirect to Onboarding Screen after Sign up
+  };
+
 
   return (
     <View>
@@ -29,6 +36,8 @@ const LoginScreen = () => {
         secureTextEntry
       />
       <Button title="Log In" onPress={handleLogin} />
+
+      <Button title="Sign Up" onPress={handleSignup} />
     </View>
   );
 };
