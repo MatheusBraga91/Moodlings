@@ -13,21 +13,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  middleContainer: {
-    flex: 0.60, // 54% of the screen height
-    justifyContent: "center",
-    alignItems: "center",
-  },
 
+  middleContainer: {
+    flex: 0.54, // 54% of the screen height
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden', // Clip any overflow
+  },
+  cardBackgroundImage: {
+    flex: 1, // Fill the container
+    resizeMode: 'stretch', // Stretch the image to fill the container
+    width: '100%', // Ensure the image takes up the full width
+    height: '100%', // Ensure the image takes up the full height
+  },
   bottomContainer: {
     flexDirection: "row",
     flex: 0.15, // 28% of the screen height
     backgroundColor: '#80aaff',
     justifyContent: 'center',
 
-  },
-  cardBackgroundImage: {
-    resizeMode: 'cover',
   },
 
   text: {
@@ -144,6 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 3,
   },
   addMoodText: {
     fontFamily: "fink-heavy",
@@ -226,13 +231,12 @@ const styles = StyleSheet.create({
   },
   detailOverlay: {
     position: 'absolute', // Position the detail overlay on top of the card
-    width: '105%',
-    top: -360, // Align to the top of the card
-    left: -7, // Align to the left of the card
-    right: 0, // Align to the right of the card
-    bottom: 0, // Align to the bottom of the card
+    width: '100%', // Match the width of the container
+    height: '100%', // Match the height of the container
+    justifyContent: 'center', // Center horizontally
+    alignItems: 'center', // Center vertically
     resizeMode: 'contain', // Ensure the image fits within the card without distortion
-  }
+  },
 
 });
 
