@@ -15,6 +15,7 @@ import {
     Platform,
     TouchableOpacity,
     ImageProps,
+    Alert,
 } from "react-native";
 import * as Font from "expo-font";
 import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
@@ -24,6 +25,7 @@ import { getZodiacSign } from "../zodiac";
 import styles from "./styles";
 import { useRouter } from "expo-router";
 import avatarMap, { AvatarType, Mood } from "../MainScreen/avatarMap";
+import { supabase } from "../lib/supabaseClient"; // Import Supabase client
 
 // Avatars and Zodiac symbols setup
 const initialAvatarType: AvatarType = "bunny"; // Default avatar type
@@ -70,6 +72,21 @@ export default function Index() {
         loadFont();
     }, []);
 
+    useEffect(() => {
+        // Check if the user is authenticated
+        const checkAuth = async () => {
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError || !userData.user) {
+                console.error("User is not authenticated:", userError?.message);
+                Alert.alert("Error", "Please sign in again.");
+                router.push("/"); // Redirect to login screen
+            }
+        };
+
+        checkAuth();
+    }, []);
+
     const changeAvatarRight = () => {
         const avatarTypes: AvatarType[] = ["bunny", "fox", "raccoon", "elephant", "monkey", "opossum"];
         const currentIndex = avatarTypes.indexOf(currentAvatarType);
@@ -104,17 +121,66 @@ export default function Index() {
         setIsConfirmationModalVisible(true); // Show confirmation modal
     };
 
-    const confirmCreateUser = () => {
-        dispatch(
-            setUserInfo({
-                name: name,
-                avatar: currentAvatarType,
-                dateOfBirth: date.toLocaleDateString(),
-                zodiacSymbol: currentZodiacSymbol,
-            })
-        );
-        setIsConfirmationModalVisible(false);
-        router.push("../../MainScreen/mainScreen");
+    const confirmCreateUser = async () => {
+        try {
+            // Get the current user
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError) {
+                console.error("Error getting user:", userError.message);
+                Alert.alert("Error", "Failed to retrieve user information.");
+                return;
+            }
+
+            const userId = userData.user?.id;
+
+            if (!userId) {
+                console.error("User ID not found.");
+                Alert.alert("Error", "User ID not found.");
+                return;
+            }
+
+            // Save user info to Redux
+            dispatch(
+                setUserInfo({
+                    name: name,
+                    avatar: currentAvatarType,
+                    dateOfBirth: date.toLocaleDateString(),
+                    zodiacSymbol: currentZodiacSymbol,
+                    mood: 'Default'
+                })
+            );
+
+            // Save user info to Supabase
+            const { data, error } = await supabase
+                .from("MoodUsers")
+                .insert([
+                    {
+                        id: userId,
+                        name: name,
+                        avatar: currentAvatarType,
+                        date_of_birth: date.toISOString(), // Convert date to ISO string
+                        zodiac_symbol: currentZodiacSymbol,
+                        theme: "babyblue", // Default theme
+                        detail: null, // Default detail
+                        mood: "Default", // Default mood
+                    },
+                ])
+                .select();
+
+            if (error) {
+                console.error("Error saving to Supabase:", error.message);
+                Alert.alert("Error", "Failed to save user information.");
+                return;
+            }
+
+            // Success: Redirect to the main screen
+            setIsConfirmationModalVisible(false);
+            router.push("../../MainScreen/mainScreen");
+        } catch (err) {
+            console.error("Unexpected error:", err);
+            Alert.alert("Error", "An unexpected error occurred. Please try again.");
+        }
     };
 
     return (

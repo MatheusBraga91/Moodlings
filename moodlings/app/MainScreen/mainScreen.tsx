@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, ImageBackground, Modal, TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -11,6 +12,7 @@ import avatarMap, { AvatarType, Mood } from './avatarMap';
 import { setMood, triggerAddMood, incrementContainerUsage } from '../../redux/userSlice';
 import { DETAILS, DetailsCategory } from '../EditScreen/details';
 import { zodiacSymbols } from '../onboarding/create';
+import { supabase } from '../lib/supabaseClient'; // Import Supabase client
 import 'react-native-gesture-handler';
 
 const MainScreen = () => {
@@ -27,10 +29,41 @@ const MainScreen = () => {
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
-  // Handle mood selection with Redux
-  const selectMood = (selectedMood: Mood) => {
-    dispatch(setMood(selectedMood));
-    closeModal();
+  // Handle mood selection with Redux and Supabase
+  const selectMood = async (selectedMood: Mood) => {
+    try {
+      // Update mood in Redux
+      dispatch(setMood(selectedMood));
+
+      // Get the current user
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !userData.user) {
+        console.error('Error getting user:', userError?.message);
+        Alert.alert('Error', 'Failed to retrieve user information.');
+        return;
+      }
+
+      const userId = userData.user.id;
+
+      // Update mood in Supabase
+      const { error } = await supabase
+        .from('MoodUsers')
+        .update({ mood: selectedMood })
+        .eq('id', userId);
+
+      if (error) {
+        console.error('Error updating mood in Supabase:', error.message);
+        Alert.alert('Error', 'Failed to save mood.');
+        return;
+      }
+
+      console.log('Mood updated successfully in Supabase.');
+      closeModal();
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+    }
   };
 
   // Log user info when the page loads
@@ -159,6 +192,7 @@ const MainScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.socialButton}
+          onPress={() => router.push('../SocialScreen/social')}
         >
           <Image source={socialIcon} style={styles.socialIcon} />
         </TouchableOpacity>

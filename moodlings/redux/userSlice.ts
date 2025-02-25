@@ -41,12 +41,14 @@ const userSlice = createSlice({
         avatar: AvatarType;
         dateOfBirth: string;
         zodiacSymbol: string;
+        mood: Mood; // Add mood here
       }>
     ) => {
       state.name = action.payload.name;
       state.avatar = action.payload.avatar;
       state.dateOfBirth = action.payload.dateOfBirth;
       state.zodiacSymbol = action.payload.zodiacSymbol;
+      state.mood = action.payload.mood; // Set mood in Redux
     },
     setMood: (state, action: PayloadAction<Mood>) => {
       state.mood = action.payload;
