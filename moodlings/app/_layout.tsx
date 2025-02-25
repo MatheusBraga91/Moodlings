@@ -2,16 +2,12 @@ import { Stack } from "expo-router";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import * as Font from "expo-font";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Text, View } from "react-native";
 import 'react-native-gesture-handler';
 
-// Global Styles
-const globalStyles = {
-  text: {
-    fontFamily: "fink-heavy",
-  },
-};
+// Create a context for font loading
+export const FontContext = createContext<boolean>(false);
 
 export default function RootLayout() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -28,16 +24,20 @@ export default function RootLayout() {
   }, []);
 
   if (!fontLoaded) {
-    return <View><Text>Loading...</Text></View>;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (
     <Provider store={store}>
-      <Stack screenOptions={{
-        headerShown: false, // Hide the header for all screens
-      }}>
-        {/* Define routes here if needed */}
-      </Stack>
+      <FontContext.Provider value={fontLoaded}>
+        <Stack screenOptions={{ headerShown: false }}>
+          {/* Define routes here if needed */}
+        </Stack>
+      </FontContext.Provider>
     </Provider>
   );
 }

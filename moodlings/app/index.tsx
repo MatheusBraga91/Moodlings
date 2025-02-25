@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, Button, Alert, ImageBackground, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { supabase } from './lib/supabaseClient'; // Import the Supabase client
 import { useDispatch } from 'react-redux';
 import { setUserInfo } from '../redux/userSlice'; // Import the Redux action
 import { setDetail, setTheme } from '@/redux/cardThemeSlice';
+import { styles } from './LoginScreenStyles'; // Import the styles
+import { FontContext } from './_layout'; // Import the FontContext
+
+// Import the background image
+const backgroundImage = require('../assets/backgrounds/login.png');
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +17,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false); // Loading state
   const router = useRouter();
   const dispatch = useDispatch();
+  const fontLoaded = useContext(FontContext); // Check if font is loaded
 
   const handleLogin = async () => {
     // Input validation
@@ -86,6 +92,14 @@ const LoginScreen = () => {
       return;
     }
 
+    if (!fontLoaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
+
     setLoading(true); // Start loading
 
     try {
@@ -126,31 +140,51 @@ const LoginScreen = () => {
   };
 
   return (
-    <View>
-      <Text>Email</Text>
-      <TextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Enter your email"
-        keyboardType="email-address" // Use email keyboard
-        autoCapitalize="none" // Prevent auto-capitalization
-      />
-      <Text>Password</Text>
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Enter your password"
-        secureTextEntry
-        autoCapitalize="none" // Prevent auto-capitalization
-      />
-      <Button title="Log In" onPress={handleLogin} />
-      <Button
-        title={loading ? 'Signing Up...' : 'Sign Up'} // Show loading state
-        onPress={handleSignup}
-        disabled={loading} // Disable button when loading
-      />
-    </View>
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Text style={styles.title}>WELCOME!</Text>
+        <View style={styles.inputContainer}>
+          <Text style={{ color: 'black', marginBottom: 5 }}>Email</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Enter your email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
+          <Text style={{ color: 'black', marginBottom: 5 }}>Password</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Enter your password"
+              secureTextEntry
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={[styles.button, styles.loginButton]} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.button, styles.signUpButton]} onPress={handleSignup} disabled={loading}>
+              <Text style={styles.buttonText}>
+                {loading ? <Text>Signing Up...</Text> : <Text>Sign Up</Text>}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+      </View>
+    </ImageBackground>
   );
+
+
 };
 
 export default LoginScreen;
