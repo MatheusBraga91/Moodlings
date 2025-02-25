@@ -115,6 +115,72 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#333', // Dark gray text
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    },
+    modalContent: {
+        width: moderateScale(300),
+        padding: moderateScale(20),
+        backgroundColor: '#fff',
+        borderRadius: moderateScale(10),
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontFamily: 'fink-heavy',
+        fontSize: moderateScale(24),
+        color: '#333',
+        marginBottom: moderateScale(10),
+    },
+    inputName: {
+        fontFamily: 'fink-heavy',
+        width: moderateScale(250),
+        height: moderateScale(50),
+        borderColor: '#bd8d56',
+        borderWidth: moderateScale(2),
+        borderRadius: moderateScale(25),
+        color: '#333',
+        textAlign: 'center',
+        fontSize: moderateScale(18),
+        marginBottom: moderateScale(10),
+    },
+    errorText: {
+        color: 'red',
+        fontSize: moderateScale(14),
+        marginBottom: moderateScale(10),
+    },
+    modalButton: {
+        backgroundColor: '#bd8d56',
+        paddingHorizontal: moderateScale(20),
+        paddingVertical: moderateScale(10),
+        borderRadius: moderateScale(25),
+    },
+    modalButtonText: {
+        fontFamily: 'fink-heavy',
+        color: '#fff',
+        fontSize: moderateScale(18),
+    },
+
+    middleContainer: {
+        flex: 0.54, // 54% of the screen height
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden', // Clip any overflow
+    },
+
+    closeButton: {
+        backgroundColor: '#bd8d56',
+        paddingHorizontal: moderateScale(20),
+        paddingVertical: moderateScale(10),
+        borderRadius: moderateScale(25),
+    },
+    closeButtonText: {
+        fontFamily: 'fink-heavy',
+        color: '#fff',
+        fontSize: moderateScale(18),
+    },
 });
 
 export default styles;
