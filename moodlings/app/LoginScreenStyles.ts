@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,8 +17,7 @@ export const styles = StyleSheet.create({
     title: {
         fontFamily: "fink-heavy",
         color: "#bd8d56",
-        fontSize: 32, // Large font size for the title
-        fontWeight: 'bold', // Bold text
+        fontSize: moderateScale(60),
         textAlign: 'center', // Center the text
         marginTop: 0, // Add some space at the top
         textShadowColor: 'rgba(0, 0, 0, 0.75)', // Add a shadow for better readability

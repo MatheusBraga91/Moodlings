@@ -73,7 +73,6 @@ const EditScreen = () => {
     }
   };
 
-
   // Resolve the detail key to the actual image
   const detailImage = currentDetail
     ? Object.values(DETAILS)
@@ -178,10 +177,57 @@ const EditScreen = () => {
           visible={isDetailModalVisible}
           animationType="slide"
           transparent={true}
-          onRequestClose={() => setDetailModalVisible(false)}
+          onRequestClose={() => {
+            setDetailModalVisible(false);
+            setStampModalVisible(true); // Navigate back to the Stamp Categories Modal
+          }}
         >
           <View style={styles.modalContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={true}>
+              {/* Add the -None- option */}
+              <TouchableOpacity
+                style={styles.detailOption}
+                onPress={() => {
+                  dispatch(setDetail(null)); // Set detail to null (none)
+                  const updateDetailInSupabase = async () => {
+                    try {
+                      // Get the current user
+                      const { data: userData, error: userError } = await supabase.auth.getUser();
+
+                      if (userError || !userData.user) {
+                        console.error('Error getting user:', userError?.message);
+                        Alert.alert('Error', 'Failed to retrieve user information.');
+                        return;
+                      }
+
+                      const userId = userData.user.id;
+
+                      // Update detail in Supabase to null
+                      const { error } = await supabase
+                        .from('MoodUsers')
+                        .update({ detail: null })
+                        .eq('id', userId);
+
+                      if (error) {
+                        console.error('Error updating detail in Supabase:', error.message);
+                        Alert.alert('Error', 'Failed to save detail.');
+                        return;
+                      }
+
+                      console.log('Detail updated successfully in Supabase.');
+                    } catch (err) {
+                      console.error('Unexpected error:', err);
+                      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+                    }
+                  };
+
+                  updateDetailInSupabase();
+                }}
+              >
+                <Text style={styles.themeButtonText}>-None-</Text>
+              </TouchableOpacity>
+
+              {/* Render the details for the selected category */}
               {selectedCategory &&
                 Object.entries(DETAILS[selectedCategory]).map(([detailId, detailImage]) => (
                   <TouchableOpacity
@@ -189,7 +235,6 @@ const EditScreen = () => {
                     style={styles.detailOption}
                     onPress={() => {
                       dispatch(setDetail(detailId)); // Save the selected detail's ID to Redux
-                      setDetailModalVisible(false); // Close modal
 
                       // Save the selected detail to Supabase
                       const updateDetailInSupabase = async () => {
@@ -226,7 +271,6 @@ const EditScreen = () => {
 
                       updateDetailInSupabase();
                     }}
-
                   >
                     <Image source={detailImage} style={styles.detailImage} />
                   </TouchableOpacity>
@@ -235,7 +279,10 @@ const EditScreen = () => {
 
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setDetailModalVisible(false)}
+              onPress={() => {
+                setDetailModalVisible(false); // Close the Details Modal
+                setStampModalVisible(true); // Navigate back to the Stamp Categories Modal
+              }}
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>

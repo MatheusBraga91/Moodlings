@@ -8,8 +8,8 @@ export const THEMES = {
     avatarContainerColor: '#6fd6ff',
     moodContainerColor: '#8888df',
     cardImage: require('../../assets/cards/babyblue.png'),
-    topContainer: '#ecf2f5',
-    bottomContainer: '#c0d4db',
+    topContainer: '#ebf3f5',
+    bottomContainer: '#e2f8f7',
 
   },
   garden: {
@@ -57,7 +57,7 @@ export const THEMES = {
     welcomeColor: '#c27aad',
     zodiacImage: '#f9e5e7',
     avatarContainerColor: '#8087be',
-    moodContainerColor: '#33305b',
+    moodContainerColor: '#9195c4',
     cardImage: require('../../assets/cards/clouds.png'),
     topContainer: '#33305b',
     bottomContainer: '#33305b',
@@ -71,6 +71,18 @@ export const THEMES = {
     cardImage: require('../../assets/cards/dunes.png'),
     topContainer: '#33305b',
     bottomContainer: '#0e1b2e',
+  },
+
+  coldsnow: {
+    textColor: '#ebf3f3',
+    welcomeColor: '#6fd6ff',
+    zodiacImage: '#ebf3f3',
+    avatarContainerColor: '#6fd6ff',
+    moodContainerColor: '#8888df',
+    cardImage: require('../../assets/cards/babyblue2.png'),
+    topContainer: '#ebf3f5',
+    bottomContainer: '#e2f8f7',
+
   },
 
 };

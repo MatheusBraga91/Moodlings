@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 5,
   },
+
   zodiacContainer: {
     position: "absolute",
     top: "24%",
@@ -109,31 +110,57 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '80%',
-    backgroundColor: 'black',
-    borderRadius: 10,
+    position: 'absolute',
+    top: 0, // Position at the top of the screen
+    width: '100%', // Take up full width
+    borderBottomLeftRadius: 20, // Rounded corners at the bottom
+    borderBottomRightRadius: 20,
     padding: 20,
-    alignItems: 'center',
-    elevation: 5,
+    elevation: 5, // Add shadow for depth
   },
   modalTitle: {
-    color: 'white',
+    fontFamily: "fink-heavy",
+    color: 'white', // Change text color to black
     fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center', // Center the title
   },
   moodOption: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    width: '100%',
+    width: moderateScale(80),
+    height: moderateScale(50),
+    padding: 10,
+    marginHorizontal: 10, // Add horizontal spacing between mood options
+    borderRadius: 10, // Rounded corners for mood options
+  },
+  moodTextModal: {
+    fontFamily: "fink-heavy",
+    fontSize: moderateScale(15),
+    color: "black",
+    textAlign: "center",
+    marginVertical: 5,
+  },
+  disabledButton: {
+    backgroundColor: '#A5D6A7', // Light green when disabled
+  },
+  setMoodText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: "fink-heavy",
+  },
+  setMoodButton: {
+    backgroundColor: '#4CAF50', // Green color for the Set Mood button
+    padding: 10,
+    borderRadius: 5,
     alignItems: 'center',
+    flex: 1, // Take up equal space
+    marginRight: 10, // Add spacing between buttons
   },
   closeButton: {
-    marginTop: 20,
     padding: 10,
     backgroundColor: '#f44336',
     borderRadius: 5,
+    alignItems: 'center',
+    flex: 1, // Take up equal space
   },
   closeText: {
     fontFamily: "fink-heavy",
@@ -150,10 +177,10 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
   addMoodText: {
+    padding: 1,
     fontFamily: "fink-heavy",
+    fontSize: moderateScale(20),
     color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 
   horoscopeText: {
@@ -167,8 +194,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
   },
-
-
 
   calendarButton: {
     width: moderateScale(75),
@@ -236,6 +261,14 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center vertically
     resizeMode: 'contain', // Ensure the image fits within the card without distortion
   },
+
+  modalButtonContainer: {
+    flexDirection: 'row', // Place buttons side by side
+    justifyContent: 'space-between', // Add space between buttons
+    marginTop: 20,
+  },
+
+
 
 });
 

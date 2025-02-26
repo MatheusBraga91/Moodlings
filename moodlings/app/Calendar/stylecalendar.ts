@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     day: {
 
         width: width / 7,
-        height: moderateScale(100),
+        height: moderateScale(110),
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,

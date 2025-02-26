@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, ImageBackground, Modal, TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -24,16 +25,30 @@ const MainScreen = () => {
   const currentTheme = useSelector((state: RootState) => state.cardTheme.currentTheme);
   const currentDetail = useSelector((state: RootState) => state.cardTheme.currentDetail); // Get current detail
   const [isModalVisible, setModalVisible] = useState(false);
+  const [temporaryMood, setTemporaryMood] = useState<Mood | null>(null); // Temporary mood for visual feedback
 
   // Open and close modal
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+  const openModal = () => {
+    setTemporaryMood(null); // Reset temporary mood when modal opens
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setTemporaryMood(null); // Reset temporary mood when modal closes
+    setModalVisible(false);
+  };
 
-  // Handle mood selection with Redux and Supabase
-  const selectMood = async (selectedMood: Mood) => {
+  // Handle mood selection in the modal (visual feedback only)
+  const handleSelectMood = (selectedMood: Mood) => {
+    setTemporaryMood(selectedMood); // Update temporary mood for visual feedback
+  };
+
+  // Handle Set Mood button click
+  const handleSetMood = async () => {
+    if (!temporaryMood) return; // Ensure a mood is selected
+
     try {
       // Update mood in Redux
-      dispatch(setMood(selectedMood));
+      dispatch(setMood(temporaryMood));
 
       // Get the current user
       const { data: userData, error: userError } = await supabase.auth.getUser();
@@ -49,7 +64,7 @@ const MainScreen = () => {
       // Update mood in Supabase
       const { error } = await supabase
         .from('MoodUsers')
-        .update({ mood: selectedMood })
+        .update({ mood: temporaryMood })
         .eq('id', userId);
 
       if (error) {
@@ -59,6 +74,12 @@ const MainScreen = () => {
       }
 
       console.log('Mood updated successfully in Supabase.');
+
+      // Trigger handleAddMood
+      dispatch(triggerAddMood()); // Set addMoodTriggered to true
+      dispatch(incrementContainerUsage()); // Increment container usage by 1
+
+      // Close the modal
       closeModal();
     } catch (err) {
       console.error('Unexpected error:', err);
@@ -74,10 +95,10 @@ const MainScreen = () => {
   // Get the avatar image based on user info
   const getAvatarImage = () => {
     const userAvatar = userInfo.avatar;
-    const userMood = userInfo.mood;
+    const moodToUse = temporaryMood || userInfo.mood; // Use temporaryMood if modal is open, otherwise use Redux mood
 
-    if (avatarMap[userAvatar] && avatarMap[userAvatar][userMood]) {
-      return avatarMap[userAvatar][userMood];
+    if (avatarMap[userAvatar] && avatarMap[userAvatar][moodToUse]) {
+      return avatarMap[userAvatar][moodToUse];
     }
     return null;
   };
@@ -86,8 +107,7 @@ const MainScreen = () => {
 
   // Handle Add Mood button click
   const handleAddMood = () => {
-    dispatch(triggerAddMood()); // Set addMoodTriggered to true
-    dispatch(incrementContainerUsage()); // Increment container usage by 1
+    openModal(); // Open the modal when Add Mood is clicked
   };
 
   const calendarIcon = require('../../assets/icons/calendar.png');
@@ -109,8 +129,8 @@ const MainScreen = () => {
       {/* Top Container */}
       <View style={[styles.topContainer, { backgroundColor: THEMES[currentTheme].topContainer }]}>
         <Text style={[styles.moodText, { color: THEMES[currentTheme].welcomeColor }]}>Hi {userInfo.name}, how are you feeling today? </Text>
-        <TouchableOpacity style={styles.addMoodButton} onPress={handleAddMood}>
-          <Text style={styles.addMoodText}>Add Mood</Text>
+        <TouchableOpacity style={[styles.addMoodButton, { backgroundColor: THEMES[currentTheme].moodContainerColor }]} onPress={handleAddMood}>
+          <Text style={[styles.addMoodText, { color: THEMES[currentTheme].textColor }]}>Select Mood</Text>
         </TouchableOpacity>
       </View>
 
@@ -140,35 +160,41 @@ const MainScreen = () => {
         </View>
 
         {/* Mood Container */}
-        <TouchableOpacity
-          style={[styles.moodContainer, { backgroundColor: THEMES[currentTheme].moodContainerColor }]}
-          onPress={openModal}
-        >
+        <View style={[styles.moodContainer, { backgroundColor: THEMES[currentTheme].moodContainerColor }]}>
           <Text style={[styles.moodText, { color: THEMES[currentTheme].textColor }]}>
             {userInfo.mood ? userInfo.mood : 'Click to set!'}
           </Text>
-        </TouchableOpacity>
+        </View>
       </ImageBackground>
 
       {/* Modal for Mood Selection */}
       <Modal
         visible={isModalVisible}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={closeModal}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Select Your Mood</Text>
+        <View style={[styles.modalContainer, { backgroundColor: THEMES[currentTheme].topContainer }]}>
+          <Text style={[styles.modalTitle, { color: THEMES[currentTheme].avatarContainerColor }]}>Select Your Mood</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={true}>
             {['Happy', 'Sad', 'Angry'].map((mood) => (
               <TouchableOpacity
                 key={mood}
-                style={styles.moodOption}
-                onPress={() => selectMood(mood as Mood)}
+                style={[styles.moodOption, { backgroundColor: THEMES[currentTheme].avatarContainerColor }]}
+                onPress={() => handleSelectMood(mood as Mood)}
               >
-                <Text style={styles.moodText}>{mood}</Text>
+                <Text style={[styles.moodTextModal, { color: THEMES[currentTheme].textColor }]}>{mood}</Text>
               </TouchableOpacity>
             ))}
+          </ScrollView>
+          <View style={styles.modalButtonContainer}>
+            <TouchableOpacity
+              style={[styles.setMoodButton, !temporaryMood && styles.disabledButton]}
+              onPress={handleSetMood}
+              disabled={!temporaryMood}
+            >
+              <Text style={styles.setMoodText}>Set Mood</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
               <Text style={styles.closeText}>Cancel</Text>
             </TouchableOpacity>
@@ -205,4 +231,5 @@ const MainScreen = () => {
     </View>
   );
 };
+
 export default MainScreen;
