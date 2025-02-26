@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 0.25,
-    backgroundColor: '#80aaff',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -28,8 +27,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     flexDirection: "row",
-    flex: 0.15, // 28% of the screen height
-    backgroundColor: '#80aaff',
+    flex: 0.21,
     justifyContent: 'center',
 
   },
@@ -37,6 +35,7 @@ const styles = StyleSheet.create({
   text: {
     top: "-10%",
     fontFamily: "fink-heavy",
+    textAlign: "center",
     fontSize: moderateScale(30),
     color: 'white',
   },
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   calendarButton: {
     width: moderateScale(75),
     height: moderateScale(65),
-    marginTop: 20,
+    marginTop: 50,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
   editButton: {
     width: moderateScale(60),
     height: moderateScale(65),
-    marginTop: 20,
+    marginTop: 50,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
   socialButton: {
     width: moderateScale(100),
     height: moderateScale(65),
-    marginTop: 20,
+    marginTop: 50,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
   giftsButton: {
     width: moderateScale(75),
     height: moderateScale(65),
-    marginTop: 20,
+    marginTop: 50,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

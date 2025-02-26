@@ -123,7 +123,7 @@ export default function Index() {
 
     const confirmCreateUser = async () => {
         try {
-            // Get the current user
+            // Step 1: Get the current user's session (including email)
             const { data: userData, error: userError } = await supabase.auth.getUser();
 
             if (userError) {
@@ -133,14 +133,15 @@ export default function Index() {
             }
 
             const userId = userData.user?.id;
+            const userEmail = userData.user?.email; // Fetch the user's email from the session
 
-            if (!userId) {
-                console.error("User ID not found.");
-                Alert.alert("Error", "User ID not found.");
+            if (!userId || !userEmail) {
+                console.error("User ID or email not found.");
+                Alert.alert("Error", "User ID or email not found.");
                 return;
             }
 
-            // Save user info to Redux
+            // Step 2: Save user info to Redux
             dispatch(
                 setUserInfo({
                     name: name,
@@ -151,12 +152,13 @@ export default function Index() {
                 })
             );
 
-            // Save user info to Supabase
+            // Step 3: Save user info to Supabase (including email)
             const { data, error } = await supabase
                 .from("MoodUsers")
                 .insert([
                     {
-                        id: userId,
+                        id: userId, // Use user_id as the UUID from Auth
+                        email: userEmail, // Add the user's email
                         name: name,
                         avatar: currentAvatarType,
                         date_of_birth: date.toISOString(), // Convert date to ISO string
@@ -174,7 +176,7 @@ export default function Index() {
                 return;
             }
 
-            // Success: Redirect to the main screen
+            // Step 4: Success - Redirect to the main screen
             setIsConfirmationModalVisible(false);
             router.push("../../MainScreen/mainScreen");
         } catch (err) {
@@ -182,6 +184,7 @@ export default function Index() {
             Alert.alert("Error", "An unexpected error occurred. Please try again.");
         }
     };
+
 
     return (
         <SafeAreaView style={styles.mainContainer}>

@@ -107,8 +107,8 @@ const MainScreen = () => {
   return (
     <View style={styles.mainContainer}>
       {/* Top Container */}
-      <View style={styles.topContainer}>
-        <Text style={styles.text}>Hi {userInfo.name}, how are you feeling today? </Text>
+      <View style={[styles.topContainer, { backgroundColor: THEMES[currentTheme].topContainer }]}>
+        <Text style={[styles.moodText, { color: THEMES[currentTheme].welcomeColor }]}>Hi {userInfo.name}, how are you feeling today? </Text>
         <TouchableOpacity style={styles.addMoodButton} onPress={handleAddMood}>
           <Text style={styles.addMoodText}>Add Mood</Text>
         </TouchableOpacity>
@@ -177,7 +177,7 @@ const MainScreen = () => {
       </Modal>
 
       {/* Bottom Container */}
-      <View style={styles.bottomContainer}>
+      <View style={[styles.bottomContainer, { backgroundColor: THEMES[currentTheme].bottomContainer }]}>
         <TouchableOpacity
           style={styles.calendarButton}
           onPress={() => router.push('../Calendar/calendar')}
@@ -205,5 +205,4 @@ const MainScreen = () => {
     </View>
   );
 };
-
 export default MainScreen;
